@@ -1,0 +1,30 @@
+// menu.scss
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    h2 {
+      margin-bottom: 20px; // Ajuster la marge en fonction de vos besoins
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .menu-item-gauche {
+        text-align: right; // Aligner le contenu à droite
+      }
+      .menu-item-gauche,
+      .menu-item-droite {
+        margin: 0 10px; // Ajuster la marge entre les deux images en fonction de vos besoins
+        img {
+          width: 50%;
+          height: auto;
+        }
+      }
+    }
+  }
+  

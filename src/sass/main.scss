@@ -1,0 +1,20 @@
+@import './variables.scss';
+@import '../components/Banner/banner.scss';
+@import'../components/Header/header.scss';
+@import'../components/Info/info.scss';
+@import'../components/About/about.scss';
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    color: #efcd8d;
+    font-family: $font-secondary;
+  }
+p{font-size: 15px;
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.42857143;
+}
+h1{
+    font-family: $font-primary;
+}
