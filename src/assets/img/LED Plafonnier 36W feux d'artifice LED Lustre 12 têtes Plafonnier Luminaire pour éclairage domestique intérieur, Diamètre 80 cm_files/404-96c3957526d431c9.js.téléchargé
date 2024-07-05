@@ -1,2 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[8136],{90033:function(n,u,t){(window.__NEXT_P=window.__NEXT_P||[]).push(["/static/404",function(){return t(78071)}])},78071:function(n,u,t){"use strict";t.r(u),t.d(u,{__N_SSP:function(){return _}});var _=!0;u.default=()=>null}},function(n){n.O(0,[49774,92888,40179],(function(){return u=90033,n(n.s=u);var u}));n.O()}]);
-//# sourceMappingURL=404-96c3957526d431c9.js.map

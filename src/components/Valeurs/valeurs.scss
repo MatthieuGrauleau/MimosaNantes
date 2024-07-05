@@ -1,0 +1,33 @@
+.valeurs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #efcd8d; /* Couleur de fond principale */
+    padding: 40px 20px;
+    font-family: 'Lustria', serif;
+    color: #4d301a;
+
+    div {
+        margin: 10px;
+        flex: 1;
+        text-align: center;
+        background-color: #c27741; /* Couleur de fond des blocs */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        color: white;
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #4d301a; /* Couleur des titres */
+            font-family: 'Tan Pearl', serif;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+    }
+}
