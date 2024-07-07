@@ -4,7 +4,7 @@ import React from "react";
 function Valeurs() {
   return (
     <section className='valeurs'>
-        <div>
+        <div className='div_valeurs'>
             <div>
                 <img src="" alt="" />
                 <h2>Fraicheur</h2>
