@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import "./header.scss";
+import menupdf from "../../assets/img/menu.jpg";
 
 function Header() {
   const [menuActive, setMenuActive] = useState(false);
@@ -49,7 +50,7 @@ function Header() {
               </a>
             </li>
             <li>
-              <a href="#carte" onClick={closeMenu}>
+              <a href={menupdf} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
                 Carte
               </a>
             </li>

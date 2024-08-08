@@ -13,7 +13,6 @@ function About() {
                     <p>
                         Je m'appelle Audrey, j'ai bientôt 30 ans et je travaille dans la restauration depuis plus de 10 ans !
                     </p>
-				
 					<p className="highlight_text">
 					Totalement autodidacte, formée au fil du temps par les chefs qui ont su m'épauler et me guider, je me suis spécialisée au fil du temps dans la pâtisserie de restauration tout en consolidant mes compétences en cuisine!
 					</p>
