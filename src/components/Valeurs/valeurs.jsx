@@ -2,7 +2,7 @@ import React from "react";
 
 function Valeurs() {
   return (
-    <section className="valeurs">
+    <section className="valeurs" id="valeurs">
       <div className="valeurs-header">
         <h1>Nos <span className="highlight-title">Valeurs</span></h1>
       </div>

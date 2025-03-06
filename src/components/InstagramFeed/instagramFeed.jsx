@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./instagramFeed.scss";
 
-function InstagramFeed() {
+function InstagramFeed () {
   // Dans un cas réel, vous utiliseriez l'API Instagram
   // Pour cet exemple, j'utilise des données fictives
   const [photos, setPhotos] = useState([]);
@@ -57,7 +57,7 @@ function InstagramFeed() {
   }, []);
 
   return (
-    <section className="instagram-feed">
+    <section className="instagram-feed" id="gallerie">
       <div className="instagram-header">
         <h1><span className="instagram-icon">#</span> Suivez nos créations <span className="highlight-title">@MimosaNantes</span></h1>
         <p className="instagram-subtitle">Partagez vos moments chez nous avec #MimosaNantes</p>

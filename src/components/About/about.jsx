@@ -3,7 +3,7 @@ import creation from "../../assets/img/creation.JPG";
 
 function About() {
     return (
-        <section className="about">
+        <section className="about" id="about">
             <div className="left-container">
                 <img src={audrey} alt="Audrey la patronne de l'établissement" />
             </div>

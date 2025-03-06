@@ -41,11 +41,11 @@ function Header() {
           <ul className="nav">
             <li>
               <a href="#about" onClick={closeMenu}>
-                Chef
+                Histoire
               </a>
             </li>
             <li>
-              <a href="#about" onClick={closeMenu}>
+              <a href="#valeurs" onClick={closeMenu}>
                 Valeurs 
               </a>
             </li>
@@ -55,22 +55,17 @@ function Header() {
               </a>
             </li>
             <li>
-              <a href="#work" onClick={closeMenu}>
-                Equipe
-              </a>
-            </li>
-            <li>
-              <a href="#work" onClick={closeMenu}>
+              <a href="#gallerie" onClick={closeMenu}>
                 Gallerie
               </a>
             </li>
             <li>
-              <a href="#work" onClick={closeMenu}>
+              <a href="#avis" onClick={closeMenu}>
                 Avis
               </a>
             </li>
             <li>
-              <a href="#work" onClick={closeMenu}>
+              <a href="#contact" onClick={closeMenu}>
                 Contact
               </a>
             </li>
