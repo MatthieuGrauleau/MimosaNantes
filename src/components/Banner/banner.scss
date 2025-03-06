@@ -1,36 +1,47 @@
 .banner {
-    position: relative;
-    background: url(../../assets/img/slidertest.jpg);
-    height: 600px;
-    background-size: cover;
-    background-position: center;
-  
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 600px;
-      background: rgba(0, 0, 0, 0.3); /* Utilisation de rgba pour l'opacité */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-  
-      .overlay-content {
-        text-align: center;
-  
-        .logo {
-          opacity: 1;
-          /* Ajoutez d'autres styles pour le logo si nécessaire */
-        }
-  
-        .button {
-            text-decoration: none;
-          /* Ajoutez des styles pour le bouton si nécessaire */
-		  
-        }
+  position: relative;
+  background: url(../../assets/img/slidertest.jpg);
+  height: 650px;
+  background-size: cover;
+  background-position: center;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 650px;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      margin-bottom: 30px;
+      max-width: 70%;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: #B0714B;
+      color: #efcd8d;
+      text-decoration: none;
+      font-family: 'Tan Pearl', serif;
+      font-size: 1.2em;
+      border-radius: 50px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      border: 2px solid #efcd8d;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      
+      &:hover {
+        background-color: #9d4f16;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       }
     }
   }
-  
+}
