@@ -1,32 +1,78 @@
 .valeurs {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    padding: 60px 20px;
+    background-color: #9d4f16;
     font-family: 'Lustria', serif;
-    color: #4d301a;
-	background-color: #c27741;
-	margin-bottom: 20px;
-
-    .div_valeurs {
-        display: grid;
-    	grid-template-columns: repeat(2, 1fr);
-    	grid-template-rows: repeat(2, 1fr);
-        text-align: center;
- 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    .valeurs-header {
+      text-align: center;
+      margin-bottom: 40px;
+      
+      h1 {
+        font-size: 2.8em;
+        margin-bottom: 15px;
+        font-family: 'Tan Pearl', serif;
         color: white;
-
-        h2 {
-            font-size: 2em;
-            margin-bottom: 10px;
-            color: #4d301a; /* Couleur des titres */
-            font-family: 'Tan Pearl', serif;
+        
+        .highlight-title {
+          color: #efcd8d;
         }
-
-        p {
-            font-size: 1.2em;
-            line-height: 1.6;
-        }
+      }
     }
-}
+    
+    .valeurs-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .valeur-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 30px 25px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      
+      &:hover {
+        transform: translateY(-5px);
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+      
+      .valeur-circle {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-color: rgba(239, 205, 141, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-family: 'Tan Pearl', serif;
+        font-size: 32px;
+        color: #efcd8d;
+      }
+      
+      h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        color: white;
+        font-family: 'Tan Pearl', serif;
+      }
+      
+      p {
+        font-size: 1em;
+        line-height: 1.6;
+        color: white;
+        font-family: 'Lustria', serif;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .valeurs-container {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+    }
+  }
