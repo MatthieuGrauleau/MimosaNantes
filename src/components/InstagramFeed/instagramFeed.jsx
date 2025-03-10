@@ -70,7 +70,7 @@ function InstagramFeed() {
         <div className="loading">Chargement des photos...</div>
       ) : (
         <div className="instagram-carousel-container">
-          {photos.length > imagesPerPage && (
+          {photos.length > imagesPerPage && currentPage > 0 && (
             <button 
               className="carousel-arrow carousel-arrow-left" 
               onClick={goToPreviousPage}

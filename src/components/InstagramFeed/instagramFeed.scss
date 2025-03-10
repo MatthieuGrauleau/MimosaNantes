@@ -80,11 +80,11 @@
     }
     
     &.carousel-arrow-left {
-      left: -25px;
+      left: -60px;
     }
     
     &.carousel-arrow-right {
-      right: -25px;
+      right: -60px;
     }
   }
   
@@ -196,6 +196,14 @@
       width: 40px;
       height: 40px;
       font-size: 20px;
+      
+      &.carousel-arrow-left {
+        left: -50px;
+      }
+      
+      &.carousel-arrow-right {
+        right: -50px;
+      }
     }
   }
   
@@ -210,11 +218,11 @@
       height: 35px;
       
       &.carousel-arrow-left {
-        left: -15px;
+        left: -40px;
       }
       
       &.carousel-arrow-right {
-        right: -15px;
+        right: -40px;
       }
     }
   }
