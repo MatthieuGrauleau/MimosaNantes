@@ -4,7 +4,11 @@ import "./instagramFeed.scss";
 function InstagramFeed() {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [currentPage, setCurrentPage] = useState(0);
+  
+  // Nombre d'images à afficher par page
+  const imagesPerPage = 8;
+  
   // Ton access token Instagram
   const accessToken = "IGAAQk9eLbw8xBZAE5jVm5CajBGeWRYWmt6V09XelJqVVNRMVQ2dkpfSV84NUpOUWNId3ZAyZAjhIU2MxRVhDWkVodjFBbGRMZAFl5Y0R6dnFhQ0tnRTlZAWmNaQVEwQkVuQjFGVTlZAczdweWdsejVzcU41M21VSHN6U3RBQnByMVNMcwZDZD"; // Remplace avec ton token actuel
 
@@ -36,6 +40,25 @@ function InstagramFeed() {
     fetchInstagramPhotos();
   }, []);
 
+  // Calculer le nombre total de pages
+  const totalPages = Math.ceil(photos.length / imagesPerPage);
+  
+  // Obtenir les photos pour la page actuelle
+  const getCurrentPagePhotos = () => {
+    const startIndex = currentPage * imagesPerPage;
+    return photos.slice(startIndex, startIndex + imagesPerPage);
+  };
+  
+  // Naviguer vers la page précédente
+  const goToPreviousPage = () => {
+    setCurrentPage(prev => (prev === 0 ? totalPages - 1 : prev - 1));
+  };
+  
+  // Naviguer vers la page suivante
+  const goToNextPage = () => {
+    setCurrentPage(prev => (prev === totalPages - 1 ? 0 : prev + 1));
+  };
+
   return (
     <section className="instagram-feed" id="gallerie">
       <div className="instagram-header">
@@ -46,18 +69,52 @@ function InstagramFeed() {
       {loading ? (
         <div className="loading">Chargement des photos...</div>
       ) : (
-        <div className="instagram-grid">
-          {photos.map((photo) => (
-            <a href={photo.permalink} key={photo.id} target="_blank" rel="noopener noreferrer">
-              <div className="instagram-item">
-                <div className="instagram-image-container">
-                  <img src={photo.imageUrl} alt={photo.caption} className="instagram-image" />
-                  <div className="instagram-overlay">
-                    <div className="instagram-caption">{photo.caption}</div>
+        <div className="instagram-carousel-container">
+          {photos.length > imagesPerPage && (
+            <button 
+              className="carousel-arrow carousel-arrow-left" 
+              onClick={goToPreviousPage}
+              aria-label="Photos précédentes"
+            >
+              &lt;
+            </button>
+          )}
+          
+          <div className="instagram-grid">
+            {getCurrentPagePhotos().map((photo) => (
+              <a href={photo.permalink} key={photo.id} target="_blank" rel="noopener noreferrer">
+                <div className="instagram-item">
+                  <div className="instagram-image-container">
+                    <img src={photo.imageUrl} alt={photo.caption} className="instagram-image" />
+                    <div className="instagram-overlay">
+                      <div className="instagram-caption">{photo.caption}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            ))}
+          </div>
+          
+          {photos.length > imagesPerPage && (
+            <button 
+              className="carousel-arrow carousel-arrow-right" 
+              onClick={goToNextPage}
+              aria-label="Photos suivantes"
+            >
+              &gt;
+            </button>
+          )}
+        </div>
+      )}
+      
+      {!loading && photos.length > imagesPerPage && (
+        <div className="carousel-indicators">
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <span 
+              key={index} 
+              className={`carousel-dot ${index === currentPage ? "active" : ""}`}
+              onClick={() => setCurrentPage(index)}
+            />
           ))}
         </div>
       )}
