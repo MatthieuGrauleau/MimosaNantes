@@ -33,8 +33,37 @@ header {
             justify-content: space-between;
             list-style: none;
             
-            a {
-                text-decoration: none;
+            .nav-item {
+                position: relative;
+                
+                a {
+                    text-decoration: none;
+                    color: #fff;
+                    padding: 5px 10px;
+                    transition: all 0.3s ease;
+                    
+                    // Effet au survol - Option 1: changement de couleur
+                    &:hover {
+                        color: #f8d195;
+                    }
+                    
+                    // Effet au survol - Option 2: ligne en dessous
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -5px;
+                        left: 50%;
+                        width: 0;
+                        height: 2px;
+                        background-color: #f8d195;
+                        transition: all 0.3s ease;
+                        transform: translateX(-50%);
+                    }
+                    
+                    &:hover::after {
+                        width: 80%;
+                    }
+                }
             }
         }
     }
