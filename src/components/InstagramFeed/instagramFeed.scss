@@ -4,6 +4,130 @@
   font-family: 'Lustria', serif;
   color: #4d301a;
   
+  // Ajout du style pour l'icône de vidéo
+  .video-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    
+    svg {
+      color: white;
+    }
+  }
+  
+  // Style pour le conteneur vidéo
+  .video-container {
+    width: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  // Styles pour la lightbox pop-up
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; // Valeur très élevée pour s'assurer qu'elle apparaît au-dessus de tout
+    animation: fadeIn 0.3s ease;
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .lightbox-content {
+      position: relative;
+      width: 80%;
+      max-width: 1000px;
+      max-height: 90vh;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      transform: scale(1);
+      animation: scaleIn 0.3s ease;
+      
+      @keyframes scaleIn {
+        from { transform: scale(0.9); }
+        to { transform: scale(1); }
+      }
+      
+      .lightbox-media {
+        width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+        background-color: #000;
+      }
+      
+      .lightbox-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          background-color: #B0714B;
+          transform: scale(1.1);
+        }
+      }
+      
+      .lightbox-caption {
+        padding: 20px;
+        font-size: 1.1em;
+        color: #4d301a;
+        background-color: #EFEBE2;
+        max-height: 120px;
+        overflow-y: auto;
+      }
+      
+      .lightbox-instagram-link {
+        display: block;
+        text-align: center;
+        padding: 15px;
+        background-color: #B0714B;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        
+        &:hover {
+          background-color: #9d4f16;
+        }
+      }
+    }
+  }
+  
   .instagram-header {
     text-align: center;
     margin-bottom: 40px;
@@ -113,6 +237,7 @@
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
     
     .instagram-image-container {
       position: relative;
@@ -150,6 +275,12 @@
         .instagram-caption {
           margin-bottom: 10px;
           font-size: 1em;
+          max-height: 80px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
         }
       }
       
@@ -205,6 +336,10 @@
         right: -50px;
       }
     }
+    
+    .lightbox .lightbox-content {
+      width: 90%;
+    }
   }
   
   @media (max-width: 768px) {
@@ -224,6 +359,11 @@
       &.carousel-arrow-right {
         right: -40px;
       }
+    }
+    
+    .lightbox .lightbox-content {
+      width: 95%;
+      max-height: 95vh;
     }
   }
   
@@ -250,6 +390,24 @@
     
     .carousel-indicators {
       margin-top: 60px;
+    }
+    
+    .lightbox .lightbox-content {
+      width: 95%;
+      border-radius: 5px;
+      
+      .lightbox-caption {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      
+      .lightbox-close {
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 24px;
+      }
     }
   }
 }
