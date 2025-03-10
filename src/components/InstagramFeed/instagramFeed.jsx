@@ -1,59 +1,39 @@
 import React, { useState, useEffect } from "react";
 import "./instagramFeed.scss";
 
-function InstagramFeed () {
-  // Dans un cas réel, vous utiliseriez l'API Instagram
-  // Pour cet exemple, j'utilise des données fictives
+function InstagramFeed() {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Simulation du chargement des photos
+  // Ton access token Instagram
+  const accessToken = "IGAAQk9eLbw8xBZAE5jVm5CajBGeWRYWmt6V09XelJqVVNRMVQ2dkpfSV84NUpOUWNId3ZAyZAjhIU2MxRVhDWkVodjFBbGRMZAFl5Y0R6dnFhQ0tnRTlZAWmNaQVEwQkVuQjFGVTlZAczdweWdsejVzcU41M21VSHN6U3RBQnByMVNMcwZDZD"; // Remplace avec ton token actuel
+
   useEffect(() => {
-    // Simule un appel API
-    setTimeout(() => {
-      // Photos fictives - remplacez par vos propres images
-      const dummyPhotos = [
-        {
-          id: '1',
-          imageUrl: 'https://via.placeholder.com/300x300',
-          caption: 'Nouvelle création du jour : tarte aux fruits de saison',
-          likes: 124
-        },
-        {
-          id: '2',
-          imageUrl: 'https://via.placeholder.com/300x300',
-          caption: 'Notre spécialité maison',
-          likes: 89
-        },
-        {
-          id: '3',
-          imageUrl: 'https://via.placeholder.com/300x300',
-          caption: 'Ambiance cosy au Mimosa',
-          likes: 156
-        },
-        {
-          id: '4',
-          imageUrl: 'https://via.placeholder.com/300x300',
-          caption: 'Nouveautés de la carte d\'automne',
-          likes: 103
-        },
-        {
-          id: '5',
-          imageUrl: 'https://via.placeholder.com/300x300',
-          caption: 'Préparation en cuisine',
-          likes: 78
-        },
-        {
-          id: '6',
-          imageUrl: 'https://via.placeholder.com/300x300',
-          caption: 'Notre équipe vous accueille',
-          likes: 112
+    async function fetchInstagramPhotos() {
+      try {
+        const response = await fetch(
+          `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink&access_token=${accessToken}`
+        );
+        const data = await response.json();
+
+        if (data.data) {
+          const formattedPhotos = data.data
+            .filter(photo => photo.media_type === "IMAGE") // Filtrer uniquement les images
+            .map(photo => ({
+              id: photo.id,
+              imageUrl: photo.media_url,
+              caption: photo.caption || "",
+              permalink: photo.permalink
+            }));
+          setPhotos(formattedPhotos);
         }
-      ];
-      
-      setPhotos(dummyPhotos);
+      } catch (error) {
+        console.error("Erreur lors du chargement des photos Instagram :", error);
+      }
       setLoading(false);
-    }, 1000);
+    }
+
+    fetchInstagramPhotos();
   }, []);
 
   return (
@@ -68,15 +48,16 @@ function InstagramFeed () {
       ) : (
         <div className="instagram-grid">
           {photos.map((photo) => (
-            <div className="instagram-item" key={photo.id}>
-              <div className="instagram-image-container">
-                <img src={photo.imageUrl} alt={photo.caption} className="instagram-image" />
-                <div className="instagram-overlay">
-                  <div className="instagram-caption">{photo.caption}</div>
-                  <div className="instagram-likes">❤️ {photo.likes}</div>
+            <a href={photo.permalink} key={photo.id} target="_blank" rel="noopener noreferrer">
+              <div className="instagram-item">
+                <div className="instagram-image-container">
+                  <img src={photo.imageUrl} alt={photo.caption} className="instagram-image" />
+                  <div className="instagram-overlay">
+                    <div className="instagram-caption">{photo.caption}</div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       )}
