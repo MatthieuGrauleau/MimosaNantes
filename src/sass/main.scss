@@ -1,4 +1,5 @@
 @import './variables.scss';
+@import './animations.scss';  // Importer le fichier d'animations
 @import '../components/Banner/banner.scss';
 @import'../components/Header/header.scss';
 @import'../components/Info/info.scss';
@@ -21,4 +22,14 @@ p{font-size: 15px;
 }
 h1{
     font-family: $font-primary;
+}
+
+// Styles pour le défilement fluide
+html {
+  scroll-behavior: smooth;
+}
+
+// Classe pour masquer les éléments avant l'animation
+.invisible {
+  opacity: 0;
 }

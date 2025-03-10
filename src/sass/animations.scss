@@ -1,0 +1,232 @@
+// src/sass/animations.scss
+
+// Variables pour les durées d'animation
+$duration-short: 0.3s;
+$duration-medium: 0.5s;
+$duration-long: 0.8s;
+
+// Variables pour les fonctions de timing
+$ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+$ease-out: cubic-bezier(0, 0, 0.2, 1);
+$ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+// Animation de fondu à l'entrée
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Animation de fondu + montée
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animation de fondu + descente
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animation de fondu + entrée par la gauche
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Animation de fondu + entrée par la droite
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Animation de zoom à l'entrée
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Animation de glissement vers le haut
+@keyframes slideInUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Animation de pulsation
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Animation de rotation douce
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Animation de teinte qui varie
+@keyframes colorShift {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(15deg);
+  }
+}
+
+// Animation de balancement
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+// Classes d'animation prêtes à l'emploi
+.animate-fadeIn {
+  animation: fadeIn $duration-medium $ease-default forwards;
+  opacity: 0;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp $duration-medium $ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fadeInDown {
+  animation: fadeInDown $duration-medium $ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fadeInLeft {
+  animation: fadeInLeft $duration-medium $ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fadeInRight {
+  animation: fadeInRight $duration-medium $ease-out forwards;
+  opacity: 0;
+}
+
+.animate-zoomIn {
+  animation: zoomIn $duration-medium $ease-out forwards;
+  opacity: 0;
+}
+
+.animate-slideInUp {
+  animation: slideInUp $duration-medium $ease-out forwards;
+  opacity: 0;
+}
+
+.animate-pulse {
+  animation: pulse 2s $ease-in-out infinite;
+}
+
+.animate-rotate {
+  animation: rotate 20s linear infinite;
+}
+
+.animate-colorShift {
+  animation: colorShift 5s $ease-in-out infinite alternate;
+}
+
+.animate-swing {
+  animation: swing 2s $ease-in-out infinite;
+  transform-origin: center top;
+}
+
+// Classes pour les délais d'animation
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+// Classe pour les éléments invisibles avant animation
+.invisible {
+  opacity: 0;
+}
+
+// Animation pour le scroll
+html {
+  scroll-behavior: smooth;
+}
+
+// Transitions générales
+.transition-all {
+  transition: all $duration-short $ease-default;
+}

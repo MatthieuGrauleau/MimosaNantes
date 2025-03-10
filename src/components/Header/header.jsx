@@ -7,6 +7,7 @@ import menupdf from "../../assets/img/menu.jpg";
 function Header() {
   const [menuActive, setMenuActive] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const toggleMenu = () => {
     setMenuActive(!menuActive);
@@ -23,8 +24,15 @@ function Header() {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    
+    // Ajouter une animation au chargement de la page
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timer);
     };
   }, []);
 
@@ -33,42 +41,24 @@ function Header() {
   const headerClass = isScrolled ? "header fixed" : "header";
 
   return (
-    <header className={headerClass}>
+    <header className={`${headerClass} ${isLoaded ? 'animate-fadeInDown' : ''}`}>
       <section className="header">
-        <h1 className="brand">Mimosa</h1>
-        <div className={menuBtnClass} onClick={toggleMenu}></div>
-        <nav className={`${navigationClass} navigation`}>
+        <h1 className={`brand ${isLoaded ? 'animate-fadeInLeft' : 'invisible'}`}>Mimosa</h1>
+        <div className={`${menuBtnClass} ${isLoaded ? 'animate-fadeIn' : 'invisible'}`} onClick={toggleMenu}></div>
+        <nav className={`${navigationClass} navigation ${isLoaded ? 'animate-fadeIn' : 'invisible'}`}>
           <ul className="nav">
-            <li>
-              <a href="#about" onClick={closeMenu}>
-                Histoire
-              </a>
-            </li>
-            <li>
-              <a href="#valeurs" onClick={closeMenu}>
-                Valeurs 
-              </a>
-            </li>
-            <li>
-              <a href={menupdf} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
-                Carte
-              </a>
-            </li>
-            <li>
-              <a href="#gallerie" onClick={closeMenu}>
-                Gallerie
-              </a>
-            </li>
-            <li>
-              <a href="#avis" onClick={closeMenu}>
-                Avis
-              </a>
-            </li>
-            <li>
-              <a href="#contact" onClick={closeMenu}>
-                Contact
-              </a>
-            </li>
+            {['Histoire', 'Valeurs', 'Carte', 'Gallerie', 'Avis', 'Contact'].map((item, index) => (
+              <li key={item} className={`nav-item ${isLoaded ? `animate-fadeInDown delay-${index * 100}` : 'invisible'}`}>
+                <a 
+                  href={item === 'Carte' ? menupdf : `#${item.toLowerCase()}`} 
+                  target={item === 'Carte' ? "_blank" : ""} 
+                  rel={item === 'Carte' ? "noopener noreferrer" : ""} 
+                  onClick={closeMenu}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
       </section>
