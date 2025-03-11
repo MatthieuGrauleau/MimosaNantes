@@ -22,6 +22,13 @@
       max-width: 70%;
     }
 
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
     .button {
       display: inline-block;
       padding: 12px 30px;
@@ -41,6 +48,16 @@
         background-color: #9d4f16;
         transform: translateY(-3px);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      }
+      
+    
+      
+    }
+    
+    @media (max-width: 480px) {
+      .button-container {
+        flex-direction: column;
+        align-items: center;
       }
     }
   }

@@ -22,14 +22,24 @@ function Banner() {
           alt="Logo Mimosa" 
           className={`${isLoaded ? 'animate-zoomIn' : 'invisible'}`}
         />
-        <a 
-          href={menupdf} 
-          className={`button ${isLoaded ? 'animate-fadeInUp delay-300' : 'invisible'}`} 
-          target="_blank" 
-          rel="noopener noreferrer"
-        >
-          Notre carte
-        </a>
+        <div className="button-container">
+          <a 
+            href={menupdf} 
+            className={`button ${isLoaded ? 'animate-fadeInUp delay-300' : 'invisible'}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            Notre carte
+          </a>
+          <a 
+            href="https://mimosabrunch.sumupstore.com/" 
+            className={`button commander ${isLoaded ? 'animate-fadeInUp delay-400' : 'invisible'}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            Commander
+          </a>
+        </div>
       </div>
     </section>
   );
