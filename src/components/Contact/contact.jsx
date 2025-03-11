@@ -97,7 +97,7 @@ function Contact() {
               <a href="https://www.instagram.com/mimosanantes" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
-              <a href="https://www.facebook.com/mimosanantes" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a href="https://www.facebook.com/people/Mimosa-Brunch-P%C3%A2tisseries/61574192960387/" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <FontAwesomeIcon icon={faFacebookF} />
               </a>
             </div>
