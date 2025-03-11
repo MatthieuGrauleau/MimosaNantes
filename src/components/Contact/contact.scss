@@ -69,16 +69,23 @@
           
           .info-icon {
             margin-right: 15px;
-            width: 40px;
-            height: 40px;
-            min-width: 40px;
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
             background-color: #B0714B;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 16px;
+            font-size: 22px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            
+            &:hover {
+              transform: scale(1.05);
+              box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
           }
           
           .info-content {
@@ -86,6 +93,14 @@
               margin: 0 0 8px;
               font-size: 1.2em;
               color: #4d301a;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              
+              i {
+                color: #B0714B;
+                font-size: 0.9em;
+              }
             }
             
             p {
@@ -113,8 +128,17 @@
           
           h3 {
             margin-bottom: 15px;
-            font-size: 1.2em;
+            font-size: 1.3em;
             color: #4d301a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            
+            i {
+              color: #B0714B;
+              font-size: 0.9em;
+            }
           }
           
           .social-icons {
@@ -126,18 +150,20 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              width: 50px;
-              height: 50px;
+              width: 60px;
+              height: 60px;
               background-color: #B0714B;
               color: white;
               border-radius: 50%;
-              font-size: 20px;
+              font-size: 25px;
               text-decoration: none;
               transition: all 0.3s ease;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
               
               &:hover {
                 background-color: #9d4f16;
                 transform: translateY(-3px);
+                box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
               }
             }
           }
