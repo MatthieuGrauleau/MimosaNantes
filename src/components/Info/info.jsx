@@ -30,8 +30,8 @@ function Info() {
           className={isInfo3Visible ? 'animate-fadeInUp delay-400' : 'invisible'}
         >
             <h2>horaires</h2>
-            <p>Du Mardi au Dimanche
-            De 10h à 19h
+            <p>Du Lundi au Dimanche
+            De 11h30 à 15h
             </p>
         </div>
     </section>

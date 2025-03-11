@@ -5,6 +5,7 @@ import Info from "../components/Info/info";
 import Valeurs from "../components/Valeurs/valeurs";
 import InstagramFeed from "../components/InstagramFeed/instagramFeed";
 import Avis from "../components/Avis/avis";
+import Contact from "../components/Contact/contact";
 
 function Home(){
     return(
@@ -16,6 +17,7 @@ function Home(){
         <Valeurs/>
         <InstagramFeed/>
         <Avis/>
+        <Contact/>
     </>
     );
 }
