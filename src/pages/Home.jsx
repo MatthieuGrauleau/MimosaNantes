@@ -6,6 +6,7 @@ import Valeurs from "../components/Valeurs/valeurs";
 import InstagramFeed from "../components/InstagramFeed/instagramFeed";
 import Avis from "../components/Avis/avis";
 import Contact from "../components/Contact/contact";
+import Footer from "../components/Footer/footer";
 
 function Home(){
     return(
@@ -18,6 +19,7 @@ function Home(){
         <InstagramFeed/>
         <Avis/>
         <Contact/>
+        <Footer/>
     </>
     );
 }
