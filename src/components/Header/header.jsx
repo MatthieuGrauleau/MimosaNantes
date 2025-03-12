@@ -17,7 +17,7 @@ function Header() {
     { text: 'Histoire', href: '#about', sectionId: 'about' },
     { text: 'Valeurs', href: '#valeurs', sectionId: 'valeurs' },
     { text: 'Carte', href: menupdf, target: "_blank", rel: "noopener noreferrer" },
-    { text: 'Gallerie', href: '#gallerie', sectionId: 'gallerie' },
+    { text: 'Galerie', href: '#galerie', sectionId: 'galerie' },
     { text: 'Avis', href: '#avis', sectionId: 'avis' },
     { text: 'Contact', href: '#contact', sectionId: 'contact' }
   ], []);

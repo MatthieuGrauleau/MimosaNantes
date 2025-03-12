@@ -34,7 +34,7 @@ function Footer() {
             <ul>
               <li><a href="#about">Notre histoire</a></li>
               <li><a href="#valeurs">Nos valeurs</a></li>
-              <li><a href="#gallerie">Gallerie</a></li>
+              <li><a href="#galerie">Galerie</a></li>
               <li><a href="#avis">Avis clients</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
