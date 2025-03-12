@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useIntersectionObserver } from "../../utils/animationUtils";
 
 function Valeurs() {
@@ -7,6 +7,23 @@ function Valeurs() {
   const [cardRef2, isCard2Visible] = useIntersectionObserver();
   const [cardRef3, isCard3Visible] = useIntersectionObserver();
   const [cardRef4, isCard4Visible] = useIntersectionObserver();
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Détection des appareils mobiles
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Vérifier au chargement initial
+    checkIsMobile();
+    
+    // Ajouter un écouteur d'événement pour les changements de taille
+    window.addEventListener('resize', checkIsMobile);
+    
+    // Nettoyer l'écouteur d'événement
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   return (
     <section className="valeurs" id="valeurs">
@@ -19,7 +36,7 @@ function Valeurs() {
       <div className="valeurs-container">
         <div 
           ref={cardRef1}
-          className={`valeur-card ${isCard1Visible ? 'animate-zoomIn delay-100' : 'invisible'}`}
+          className={`valeur-card ${isCard1Visible ? 'animate-zoomIn' : 'invisible'} ${!isMobile ? 'delay-100' : ''}`}
         >
           <div className="valeur-circle">F</div>
           <h2>Fraîcheur</h2>
@@ -27,7 +44,7 @@ function Valeurs() {
         </div>
         <div 
           ref={cardRef2}
-          className={`valeur-card ${isCard2Visible ? 'animate-zoomIn delay-200' : 'invisible'}`}
+          className={`valeur-card ${isCard2Visible ? 'animate-zoomIn' : 'invisible'} ${!isMobile ? 'delay-200' : ''}`}
         >
           <div className="valeur-circle">C</div>
           <h2>Créativité</h2>
@@ -35,7 +52,7 @@ function Valeurs() {
         </div>
         <div 
           ref={cardRef3}
-          className={`valeur-card ${isCard3Visible ? 'animate-zoomIn delay-300' : 'invisible'}`}
+          className={`valeur-card ${isCard3Visible ? 'animate-zoomIn' : 'invisible'} ${!isMobile ? 'delay-300' : ''}`}
         >
           <div className="valeur-circle">N</div>
           <h2>Naturel</h2>
@@ -43,7 +60,7 @@ function Valeurs() {
         </div>
         <div 
           ref={cardRef4}
-          className={`valeur-card ${isCard4Visible ? 'animate-zoomIn delay-400' : 'invisible'}`}
+          className={`valeur-card ${isCard4Visible ? 'animate-zoomIn' : 'invisible'} ${!isMobile ? 'delay-400' : ''}`}
         >
           <div className="valeur-circle">M</div>
           <h2>Maison</h2>
