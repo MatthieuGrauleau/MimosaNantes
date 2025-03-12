@@ -116,6 +116,13 @@ function InstagramFeed() {
     setCurrentPage(prev => (prev === totalPages - 1 ? 0 : prev + 1));
   };
 
+  // Fonction pour tronquer le texte à 50 caractères
+  const truncateCaption = (caption, maxLength = 50) => {
+    if (!caption) return "";
+    if (caption.length <= maxLength) return caption;
+    return caption.substring(0, maxLength) + "...";
+  };
+
   return (
     <section className="instagram-feed" id="gallerie">
       <div className="instagram-header">
@@ -158,7 +165,7 @@ function InstagramFeed() {
                       </div>
                     )}
                     <div className="instagram-overlay">
-                      <div className="instagram-caption">{item.caption}</div>
+                      <div className="instagram-caption">{truncateCaption(item.caption)}</div>
                     </div>
                   </div>
                 </div>
