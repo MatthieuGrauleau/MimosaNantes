@@ -1,13 +1,13 @@
 header {
-    position: fixed; // Le header est toujours fixé
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    padding-top: 15px; // Padding uniforme
-    padding-bottom: 15px; // Padding uniforme
+    padding-top: 15px;
+    padding-bottom: 15px;
     background-color: #4d301a;
-    z-index: 1000; // Assure que le header est au-dessus des autres éléments
-    transition: box-shadow 0.3s ease; // Transition douce pour l'ombre
+    z-index: 1000;
+    transition: box-shadow 0.3s ease;
     
     &.fixed {
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -18,36 +18,130 @@ header {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        margin-right: 130px;
-        margin-left: 130px;
+        margin-right: 5%;
+        margin-left: 5%;
         padding: 10px;
         
+        @media (min-width: 769px) {
+            margin-right: 130px;
+            margin-left: 130px;
+        }
+        
+        .brand {
+            font-size: 1.8rem;
+            z-index: 1001;
+            
+            a {
+                text-decoration: none;
+                color: #fff;
+            }
+        }
+        
+        // Burger Menu Style
+        .burger-menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            
+            @media (min-width: 769px) {
+                display: none;
+            }
+            
+            span {
+                display: block;
+                height: 3px;
+                width: 100%;
+                background-color: #fff;
+                border-radius: 3px;
+                transition: all 0.3s ease;
+            }
+            
+            &.active {
+                span {
+                    &:nth-child(1) {
+                        transform: translateY(10px) rotate(45deg);
+                    }
+                    
+                    &:nth-child(2) {
+                        opacity: 0;
+                    }
+                    
+                    &:nth-child(3) {
+                        transform: translateY(-10px) rotate(-45deg);
+                    }
+                }
+            }
+        }
+        
         .navigation {
-            width: 100%;
-            margin-left: 300px;
+            @media (max-width: 768px) {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: #4d301a;
+                padding-top: 80px;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                
+                &.active {
+                    right: 0;
+                }
+            }
+            
+            @media (min-width: 769px) {
+                width: 100%;
+                margin-left: 300px;
+            }
         }
         
         .nav {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
             list-style: none;
+            padding: 0;
+            margin: 0;
+            
+            @media (max-width: 768px) {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            @media (min-width: 769px) {
+                flex-direction: row;
+                justify-content: space-between;
+            }
             
             .nav-item {
                 position: relative;
+                margin: 0;
+                
+                @media (max-width: 768px) {
+                    margin: 15px 0;
+                    width: 100%;
+                    text-align: center;
+                }
                 
                 a {
                     text-decoration: none;
                     color: #fff;
                     padding: 5px 10px;
                     transition: all 0.3s ease;
+                    display: block;
                     
-                    // Effet au survol - Option 1: changement de couleur
+                    @media (max-width: 768px) {
+                        font-size: 1.2rem;
+                        padding: 10px;
+                    }
+                    
                     &:hover {
                         color: #f8d195;
                     }
                     
-                    // Effet au survol - Option 2: ligne en dessous
                     &::after {
                         content: '';
                         position: absolute;
@@ -66,5 +160,74 @@ header {
                 }
             }
         }
+    }
+    
+    // Overlay for mobile menu
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+        
+        @media (max-width: 768px) {
+            display: block;
+        }
+    }
+}
+
+// Animation classes
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-fadeInDown {
+    animation: fadeInDown 0.5s ease forwards;
+}
+
+.animate-fadeInLeft {
+    animation: fadeInLeft 0.5s ease forwards;
+}
+
+.invisible {
+    opacity: 0;
+}
+
+// Delay classes
+.delay-0 { animation-delay: 0s; }
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+// Keyframes
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }

@@ -8,6 +8,8 @@ function Header() {
   const [menuActive, setMenuActive] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  // Nous n'avons pas besoin de suivre l'état mobile directement
+  // puisque nous utilisons uniquement des media queries CSS
 
   const toggleMenu = () => {
     setMenuActive(!menuActive);
@@ -20,6 +22,13 @@ function Header() {
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     setIsScrolled(scrollPosition > 0);
+  };
+
+  const handleResize = () => {
+    // Fermer le menu automatiquement si on passe en mode desktop
+    if (window.innerWidth > 768) {
+      setMenuActive(false);
+    }
   };
 
   const scrollToTop = (e) => {
@@ -51,6 +60,12 @@ function Header() {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    
+    // Vérifier si on doit fermer le menu au chargement
+    if (window.innerWidth > 768) {
+      setMenuActive(false);
+    }
     
     // Ajouter une animation au chargement de la page
     const timer = setTimeout(() => {
@@ -59,11 +74,12 @@ function Header() {
     
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
       clearTimeout(timer);
     };
   }, []);
 
-  const menuBtnClass = menuActive ? "menu-btn active" : "menu-btn";
+  const burgerClass = menuActive ? "burger-menu active" : "burger-menu";
   const navigationClass = menuActive ? "navigation active" : "navigation";
   const headerClass = isScrolled ? "header fixed" : "header";
 
@@ -83,8 +99,14 @@ function Header() {
         <h1 className={`brand ${isLoaded ? 'animate-fadeInLeft' : 'invisible'}`}>
           <a href="/" onClick={scrollToTop} style={{ textDecoration: 'none', color: 'inherit' }}>Mimosa</a>
         </h1>
-        <div className={`${menuBtnClass} ${isLoaded ? 'animate-fadeIn' : 'invisible'}`} onClick={toggleMenu}></div>
-        <nav className={`${navigationClass} navigation ${isLoaded ? 'animate-fadeIn' : 'invisible'}`}>
+        
+        <div className={`${burgerClass} ${isLoaded ? 'animate-fadeIn' : 'invisible'}`} onClick={toggleMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        
+        <nav className={`${navigationClass} ${isLoaded ? 'animate-fadeIn' : 'invisible'}`}>
           <ul className="nav">
             {navLinks.map((link, index) => (
               <li key={link.text} className={`nav-item ${isLoaded ? `animate-fadeInDown delay-${index * 100}` : 'invisible'}`}>
@@ -101,6 +123,8 @@ function Header() {
           </ul>
         </nav>
       </section>
+      
+      {menuActive && <div className="overlay" onClick={closeMenu}></div>}
     </header>
   );
 }
