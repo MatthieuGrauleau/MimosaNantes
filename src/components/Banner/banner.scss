@@ -1,7 +1,9 @@
 .banner {
   position: relative;
   background: url(../../assets/img/slidertest.jpg);
-  height: 650px;
+  height: 100vh; /* Utilisation de vh pour une hauteur relative à la fenêtre */
+  min-height: 450px; /* Hauteur minimum pour petits écrans */
+  max-height: 800px; /* Hauteur maximum pour grands écrans */
   background-size: cover;
   background-position: center;
 
@@ -10,16 +12,26 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 650px;
+    height: 100%; /* Remplir tout le conteneur parent */
     background: rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 20px; /* Ajouter un peu de padding pour éviter que le contenu touche les bords */
 
     img {
       margin-bottom: 30px;
       max-width: 70%;
+      /* Ajuster la taille du logo en fonction de la taille d'écran */
+      @media (max-width: 768px) {
+        max-width: 80%;
+        margin-bottom: 20px;
+      }
+      @media (max-width: 480px) {
+        max-width: 90%;
+        margin-bottom: 15px;
+      }
     }
 
     .button-container {
@@ -27,6 +39,8 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
+      width: 100%;
+      max-width: 600px; /* Limiter la largeur sur grands écrans */
     }
 
     .button {
@@ -50,15 +64,40 @@
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       }
       
-    
+      /* Rendre les boutons plus adaptés aux mobiles */
+      @media (max-width: 768px) {
+        padding: 10px 25px;
+        font-size: 1.1em;
+      }
       
+      @media (max-width: 480px) {
+        padding: 8px 20px;
+        font-size: 1em;
+        width: 100%; /* Prendre toute la largeur disponible */
+        text-align: center;
+      }
     }
     
+    /* Déjà présent mais conservé pour le responsive des boutons */
     @media (max-width: 480px) {
       .button-container {
         flex-direction: column;
         align-items: center;
+        gap: 15px; /* Réduire l'espace entre les boutons sur mobile */
+        width: 90%; /* Limiter la largeur sur mobile */
       }
     }
+    
+    /* Ajouter un breakpoint supplémentaire pour les tablettes */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .button-container {
+        max-width: 90%;
+      }
+    }
+  }
+  
+  /* Pour les écrans très larges */
+  @media (min-width: 1400px) {
+    background-position: center 30%; /* Ajuster la position du background */
   }
 }

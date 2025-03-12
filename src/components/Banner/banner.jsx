@@ -11,6 +11,11 @@ function Banner() {
       setIsLoaded(true);
     }, 300);
 
+    // Ajout d'un écouteur d'événement pour s'assurer que l'image est chargée
+    const img = new Image();
+    img.src = logo;
+    img.onload = () => setIsLoaded(true);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,7 +25,7 @@ function Banner() {
         <img 
           src={logo} 
           alt="Logo Mimosa" 
-          className={`${isLoaded ? 'animate-zoomIn' : 'invisible'}`}
+          className={`logo ${isLoaded ? 'animate-zoomIn' : 'invisible'}`}
         />
         <div className="button-container">
           <a 
@@ -28,6 +33,7 @@ function Banner() {
             className={`button ${isLoaded ? 'animate-fadeInUp delay-300' : 'invisible'}`} 
             target="_blank" 
             rel="noopener noreferrer"
+            aria-label="Voir notre carte"
           >
             Notre carte
           </a>
@@ -36,6 +42,7 @@ function Banner() {
             className={`button commander ${isLoaded ? 'animate-fadeInUp delay-400' : 'invisible'}`} 
             target="_blank" 
             rel="noopener noreferrer"
+            aria-label="Commander en ligne"
           >
             Commander
           </a>
