@@ -29,7 +29,7 @@ function Info() {
           ref={info3Ref}
           className={isInfo3Visible ? 'animate-fadeInUp delay-400' : 'invisible'}
         >
-            <h2>horaires</h2>
+            <h2>Horaires</h2>
             <p>Du Lundi au Dimanche
             De 11h30 à 15h
             </p>
