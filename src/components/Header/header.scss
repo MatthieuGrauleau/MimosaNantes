@@ -115,7 +115,7 @@ header {
             
             @media (min-width: 769px) {
                 width: 100%;
-                margin-left: 300px;
+                margin-left: 320px; // Juste un peu plus que les 300px d'origine
             }
         }
         
@@ -132,7 +132,7 @@ header {
             
             @media (min-width: 769px) {
                 flex-direction: row;
-                justify-content: space-between;
+                justify-content: space-between; // Comme dans l'original
             }
             
             .nav-item {

@@ -1,132 +1,135 @@
 .avis {
-    padding: 60px 20px;
-    background-color: #EFEBE2;
-    font-family: 'Lustria', serif;
-    color: #4d301a;
+  padding: 60px 20px;
+  background-color: #9d4f16; // Changé de #EFEBE2 à #9d4f16
+  font-family: 'Lustria', serif;
+  color: white; // Changé de #4d301a à white
+  
+  .avis-header {
+    text-align: center;
+    margin-bottom: 50px;
     
-    .avis-header {
-      text-align: center;
-      margin-bottom: 50px;
+    h1 {
+      font-size: 2.8em;
+      margin-bottom: 15px;
+      font-family: 'Tan Pearl', serif;
+      color: white; // Changé de #4d301a à white
       
-      h1 {
-        font-size: 2.8em;
-        margin-bottom: 15px;
-        font-family: 'Tan Pearl', serif;
-        color: #4d301a;
-        
-        .highlight-title {
-          color: #B0714B;
-        }
-      }
-      
-      .avis-subtitle {
-        font-size: 1.2em;
-        color: #666;
+      .highlight-title {
+        color: #efcd8d; // Changé de #B0714B à #efcd8d
       }
     }
     
-    .avis-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
+    .avis-subtitle {
+      font-size: 1.2em;
+      color: #efcd8d; // Changé de #666 à #efcd8d
+    }
+  }
+  
+  .avis-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .avis-card {
+    background-color: rgba(255, 255, 255, 0.1); // Changé de white à transparent
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2); // Ajouté une bordure légère
+    
+    &:hover {
+      transform: translateY(-5px);
     }
     
-    .avis-card {
-      background-color: white;
-      border-radius: 10px;
-      padding: 25px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-      transition: transform 0.3s ease;
+    .avis-profile {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
       
-      &:hover {
-        transform: translateY(-5px);
+      .avis-profile-img {
+        margin-right: 15px;
+        
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
       }
       
-      .avis-profile {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-        
-        .avis-profile-img {
-          margin-right: 15px;
-          
-          img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
+      .avis-profile-info {
+        h3 {
+          margin: 0 0 5px;
+          font-size: 1.1em;
+          color: white; // Changé de #4d301a à white
         }
         
-        .avis-profile-info {
-          h3 {
-            margin: 0 0 5px;
-            font-size: 1.1em;
-            color: #4d301a;
-          }
+        .avis-rating {
+          margin-bottom: 5px;
           
-          .avis-rating {
-            margin-bottom: 5px;
+          .star {
+            color: rgba(239, 205, 141, 0.3); // Changé de #ccc à une version transparente de #efcd8d
+            font-size: 1.2em;
             
-            .star {
-              color: #ccc;
-              font-size: 1.2em;
-              
-              &.filled {
-                color: #B0714B;
-              }
+            &.filled {
+              color: #efcd8d; // Changé de #B0714B à #efcd8d
             }
           }
-          
-          .avis-date {
-            font-size: 0.9em;
-            color: #888;
-            margin: 0;
-          }
         }
-      }
-      
-      .avis-content {
-        p {
-          margin: 0;
-          font-size: 1em;
-          line-height: 1.6;
-          color: #555;
-        }
-      }
-    }
-    
-    .avis-cta {
-      margin-top: 40px;
-      text-align: center;
-      
-      .avis-button {
-        display: inline-block;
-        padding: 12px 24px;
-        background-color: #B0714B;
-        color: white;
-        text-decoration: none;
-        border-radius: 50px;
-        font-size: 1em;
-        transition: background-color 0.3s ease;
         
-        &:hover {
-          background-color: #9d4f16;
+        .avis-date {
+          font-size: 0.9em;
+          color: #efcd8d; // Changé de #888 à #efcd8d
+          margin: 0;
         }
       }
     }
     
-    @media (max-width: 768px) {
-      .avis-container {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .avis-container {
-        grid-template-columns: 1fr;
+    .avis-content {
+      p {
+        margin: 0;
+        font-size: 1em;
+        line-height: 1.6;
+        color: white; // Changé de #555 à white
       }
     }
   }
+  
+  .avis-cta {
+    margin-top: 40px;
+    text-align: center;
+    
+    .avis-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: rgba(239, 205, 141, 0.2); // Changé de #B0714B à une version transparente de #efcd8d
+      color: #efcd8d; // Changé de white à #efcd8d
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+      border: 2px solid #efcd8d; // Ajouté une bordure
+      
+      &:hover {
+        background-color: #efcd8d; // Changé de #9d4f16 à #efcd8d
+        color: #9d4f16; // Ajouté pour meilleur contraste au survol
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .avis-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .avis-container {
+      grid-template-columns: 1fr;
+    }
+  }
+}
