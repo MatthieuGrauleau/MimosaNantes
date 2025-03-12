@@ -1,6 +1,6 @@
 // Header.js
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./header.scss";
 import menupdf from "../../assets/img/menu.jpg";
 
@@ -8,8 +8,19 @@ function Header() {
   const [menuActive, setMenuActive] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  // Nous n'avons pas besoin de suivre l'état mobile directement
-  // puisque nous utilisons uniquement des media queries CSS
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState('');
+
+  // Map des liens de navigation avec leurs href correspondants
+  // Utilisation de useMemo pour éviter des re-renders inutiles
+  const navLinks = React.useMemo(() => [
+    { text: 'Histoire', href: '#about', sectionId: 'about' },
+    { text: 'Valeurs', href: '#valeurs', sectionId: 'valeurs' },
+    { text: 'Carte', href: menupdf, target: "_blank", rel: "noopener noreferrer" },
+    { text: 'Gallerie', href: '#gallerie', sectionId: 'gallerie' },
+    { text: 'Avis', href: '#avis', sectionId: 'avis' },
+    { text: 'Contact', href: '#contact', sectionId: 'contact' }
+  ], []);
 
   const toggleMenu = () => {
     setMenuActive(!menuActive);
@@ -19,17 +30,45 @@ function Header() {
     setMenuActive(false);
   };
 
-  const handleScroll = () => {
+  // Utiliser useCallback pour la fonction handleScroll
+  const handleScroll = useCallback(() => {
     const scrollPosition = window.scrollY;
     setIsScrolled(scrollPosition > 0);
-  };
+    
+    // Calculer la progression du scroll
+    const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = (scrollPosition / windowHeight) * 100;
+    setScrollProgress(scrolled);
+    
+    // Déterminer la section active
+    const sections = navLinks.map(link => link.sectionId).filter(Boolean);
+    
+    // Trouver la section la plus proche du haut de la fenêtre
+    let currentSection = '';
+    let minDistance = Infinity;
+    
+    sections.forEach(sectionId => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.abs(rect.top);
+        
+        if (distance < minDistance) {
+          minDistance = distance;
+          currentSection = sectionId;
+        }
+      }
+    });
+    
+    setActiveSection(currentSection);
+  }, [navLinks]);
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     // Fermer le menu automatiquement si on passe en mode desktop
     if (window.innerWidth > 768) {
       setMenuActive(false);
     }
-  };
+  }, []);
 
   const scrollToTop = (e) => {
     e.preventDefault();
@@ -59,6 +98,10 @@ function Header() {
   };
 
   useEffect(() => {
+    // Exécuter handleScroll une fois au montage pour initialiser l'état
+    handleScroll();
+    
+    // Ajouter les écouteurs d'événements
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
     
@@ -73,28 +116,23 @@ function Header() {
     }, 100);
     
     return () => {
+      // Nettoyer les écouteurs d'événements lors du démontage
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       clearTimeout(timer);
     };
-  }, []);
+  }, [handleScroll, handleResize]);
 
-  const burgerClass = menuActive ? "burger-menu active" : "burger-menu";
+  const burgerClass = menuActive ? "menu-btn active" : "menu-btn";
   const navigationClass = menuActive ? "navigation active" : "navigation";
   const headerClass = isScrolled ? "header fixed" : "header";
 
-  // Map des liens de navigation avec leurs href correspondants
-  const navLinks = [
-    { text: 'Histoire', href: '#about', sectionId: 'about' },
-    { text: 'Valeurs', href: '#valeurs', sectionId: 'valeurs' },
-    { text: 'Carte', href: menupdf, target: "_blank", rel: "noopener noreferrer" },
-    { text: 'Gallerie', href: '#gallerie', sectionId: 'gallerie' },
-    { text: 'Avis', href: '#avis', sectionId: 'avis' },
-    { text: 'Contact', href: '#contact', sectionId: 'contact' }
-  ];
-
   return (
     <header className={`${headerClass} ${isLoaded ? 'animate-fadeInDown' : ''}`}>
+      <div className="scroll-progress">
+        <div className="progress-bar" style={{ width: `${scrollProgress}%` }}></div>
+      </div>
+      
       <section className="header">
         <h1 className={`brand ${isLoaded ? 'animate-fadeInLeft' : 'invisible'}`}>
           <a href="/" onClick={scrollToTop} style={{ textDecoration: 'none', color: 'inherit' }}>Mimosa</a>
@@ -109,12 +147,14 @@ function Header() {
         <nav className={`${navigationClass} ${isLoaded ? 'animate-fadeIn' : 'invisible'}`}>
           <ul className="nav">
             {navLinks.map((link, index) => (
-              <li key={link.text} className={`nav-item ${isLoaded ? `animate-fadeInDown delay-${index * 100}` : 'invisible'}`}>
+              <li key={link.text} 
+                  className={`nav-item ${isLoaded ? `animate-fadeInDown delay-${index * 100}` : 'invisible'} ${link.sectionId === activeSection ? 'active' : ''}`}>
                 <a 
                   href={link.href}
                   target={link.target || ""}
                   rel={link.rel || ""}
                   onClick={link.sectionId ? (e) => scrollToSection(e, link.sectionId) : link.href.startsWith('#') ? closeMenu : null}
+                  className={link.sectionId === activeSection ? 'active' : ''}
                 >
                   {link.text}
                 </a>
