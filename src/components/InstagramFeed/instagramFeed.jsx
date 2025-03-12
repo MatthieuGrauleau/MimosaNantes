@@ -6,8 +6,8 @@ function InstagramFeed() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   
-  // Nombre d'images à afficher par page dans le carrousel
-  const imagesPerPage = 8;
+  // Nombre d'images à afficher par page dans le carrousel - maintenant dynamique
+  const [imagesPerPage, setImagesPerPage] = useState(8);
   
   // Ton access token Instagram
   const accessToken = "IGAAQk9eLbw8xBZAE5jVm5CajBGeWRYWmt6V09XelJqVVNRMVQ2dkpfSV84NUpOUWNId3ZAyZAjhIU2MxRVhDWkVodjFBbGRMZAFl5Y0R6dnFhQ0tnRTlZAWmNaQVEwQkVuQjFGVTlZAczdweWdsejVzcU41M21VSHN6U3RBQnByMVNMcwZDZD";
@@ -15,6 +15,34 @@ function InstagramFeed() {
   // État pour la lightbox
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState(null);
+
+  useEffect(() => {
+    // Ajuster les images par page en fonction de la taille de l'écran
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width <= 480) {
+        setImagesPerPage(2); // Moins d'images sur mobile
+      } else if (width <= 768) {
+        setImagesPerPage(4); // 4 images sur tablettes
+      } else {
+        setImagesPerPage(8); // 8 images par défaut sur desktop
+      }
+    };
+
+    // Appel initial
+    handleResize();
+    
+    // Ajouter l'écouteur d'événement
+    window.addEventListener('resize', handleResize);
+    
+    // Nettoyage
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Réinitialiser la page actuelle lorsque le nombre d'images par page change
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [imagesPerPage]);
 
   useEffect(() => {
     async function fetchAllInstagramMedia() {
