@@ -203,7 +203,7 @@ function InstagramFeed() {
         </a>
       </div>
 
-      {/* Lightbox améliorée pour afficher les médias en pop-up */}
+      {/* Lightbox améliorée avec style Instagram */}
       {lightboxOpen && selectedMedia && (
         <div className="lightbox" onClick={() => setLightboxOpen(false)}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
@@ -215,10 +215,10 @@ function InstagramFeed() {
               &times;
             </button>
             
-            {selectedMedia.mediaType === "VIDEO" ? (
-              <div className="video-container">
+            <div className="media-container">
+              {selectedMedia.mediaType === "VIDEO" ? (
                 <video 
-                  key={selectedMedia.videoUrl || selectedMedia.imageUrl} // Forcer le rechargement quand la source change
+                  key={selectedMedia.videoUrl} 
                   src={selectedMedia.videoUrl} 
                   poster={selectedMedia.imageUrl}
                   controls 
@@ -229,27 +229,45 @@ function InstagramFeed() {
                 >
                   Votre navigateur ne prend pas en charge la lecture de vidéos.
                 </video>
-              </div>
-            ) : (
-              <img 
-                src={selectedMedia.imageUrl} 
-                alt={selectedMedia.caption} 
-                className="lightbox-media" 
-              />
-            )}
-            
-            <div className="lightbox-caption">
-              {selectedMedia.caption}
+              ) : (
+                <img 
+                  src={selectedMedia.imageUrl} 
+                  alt={selectedMedia.caption} 
+                  className="lightbox-media" 
+                />
+              )}
             </div>
             
-            <a 
-              href={selectedMedia.permalink} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="lightbox-instagram-link"
-            >
-              Voir sur Instagram
-            </a>
+            <div className="info-container">
+              <div className="header">
+                <div className="profile-pic">
+                  <span className="profile-initial">M</span>
+                </div>
+                <span className="username">mimosanantes</span>
+              </div>
+              
+              <div className="lightbox-caption">
+                <span className="caption-username">mimosanantes</span>
+                {selectedMedia.caption}
+              </div>
+              
+              <div className="timestamp">
+                {new Date(selectedMedia.timestamp).toLocaleDateString('fr-FR', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric'
+                })}
+              </div>
+              
+              <a 
+                href={selectedMedia.permalink} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="lightbox-instagram-link"
+              >
+                Voir sur Instagram
+              </a>
+            </div>
           </div>
         </div>
       )}

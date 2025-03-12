@@ -39,12 +39,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.7); // Arrière-plan semi-transparent
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; // Valeur très élevée pour s'assurer qu'elle apparaît au-dessus de tout
+    z-index: 9999;
     animation: fadeIn 0.3s ease;
+    backdrop-filter: blur(5px); // Effet de flou sur l'arrière-plan
     
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -53,29 +54,124 @@
     
     .lightbox-content {
       position: relative;
-      width: 80%;
-      max-width: 1000px;
-      max-height: 90vh;
+      width: 85%;
+      max-width: 1100px;
+      height: auto;
+      max-height: 85vh;
       margin: 0 auto;
       background-color: #fff;
-      border-radius: 10px;
+      border-radius: 4px;
       overflow: hidden;
-      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
       display: flex;
-      flex-direction: column;
+      flex-direction: row; // Disposition horizontale pour ressembler à Instagram
       transform: scale(1);
       animation: scaleIn 0.3s ease;
       
       @keyframes scaleIn {
-        from { transform: scale(0.9); }
+        from { transform: scale(0.95); }
         to { transform: scale(1); }
       }
       
-      .lightbox-media {
-        width: 100%;
-        max-height: 70vh;
-        object-fit: contain;
+      .media-container {
+        flex: 0 0 65%; // Fixe à 65% de la largeur
         background-color: #000;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-height: 85vh;
+        
+        .lightbox-media {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          max-height: 85vh;
+        }
+      }
+      
+      .info-container {
+        flex: 0 0 35%; // Fixe à 35% de la largeur
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        height: 100%;
+        max-height: 85vh;
+        
+        .header {
+          padding: 16px;
+          border-bottom: 1px solid #efefef;
+          display: flex;
+          align-items: center;
+          
+          .profile-pic {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 12px;
+            background-color: #EFEBE2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 50%;
+            }
+            
+            .profile-initial {
+              color: #B0714B;
+              font-weight: bold;
+              font-size: 18px;
+            }
+          }
+          
+          .username {
+            font-weight: 600;
+            color: #262626;
+          }
+        }
+        
+        .lightbox-caption {
+          padding: 16px;
+          font-size: 14px;
+          color: #4d301a;
+          overflow-y: auto;
+          flex-grow: 1;
+          border-bottom: 1px solid #efefef;
+          
+          .caption-username {
+            font-weight: 600;
+            margin-right: 6px;
+          }
+        }
+        
+        .timestamp {
+          padding: 16px;
+          color: #8e8e8e;
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.2px;
+        }
+        
+        .lightbox-instagram-link {
+          display: block;
+          text-align: center;
+          padding: 14px;
+          background-color: #B0714B;
+          color: white;
+          text-decoration: none;
+          font-weight: 600;
+          transition: background-color 0.3s ease;
+          margin: 16px;
+          border-radius: 4px;
+          
+          &:hover {
+            background-color: #9d4f16;
+          }
+        }
       }
       
       .lightbox-close {
@@ -86,9 +182,9 @@
         color: white;
         border: none;
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        font-size: 28px;
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -101,28 +197,30 @@
           transform: scale(1.1);
         }
       }
-      
-      .lightbox-caption {
-        padding: 20px;
-        font-size: 1.1em;
-        color: #4d301a;
-        background-color: #EFEBE2;
-        max-height: 120px;
-        overflow-y: auto;
+    }
+    
+    // Media queries pour la responsivité
+    @media (max-width: 992px) {
+      .lightbox-content {
+        width: 90%;
       }
-      
-      .lightbox-instagram-link {
-        display: block;
-        text-align: center;
-        padding: 15px;
-        background-color: #B0714B;
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
+    }
+    
+    @media (max-width: 768px) {
+      .lightbox-content {
+        flex-direction: column;
+        width: 95%;
+        max-height: 90vh;
         
-        &:hover {
-          background-color: #9d4f16;
+        .media-container {
+          flex: none;
+          width: 100%;
+          max-height: 50vh;
+        }
+        
+        .info-container {
+          flex: none;
+          width: 100%;
         }
       }
     }
@@ -334,10 +432,6 @@
         right: -50px;
       }
     }
-    
-    .lightbox .lightbox-content {
-      width: 90%;
-    }
   }
   
   @media (max-width: 768px) {
@@ -357,11 +451,6 @@
       &.carousel-arrow-right {
         right: -40px;
       }
-    }
-    
-    .lightbox .lightbox-content {
-      width: 95%;
-      max-height: 95vh;
     }
   }
   
@@ -388,24 +477,6 @@
     
     .carousel-indicators {
       margin-top: 60px;
-    }
-    
-    .lightbox .lightbox-content {
-      width: 95%;
-      border-radius: 5px;
-      
-      .lightbox-caption {
-        font-size: 0.9em;
-        padding: 15px;
-      }
-      
-      .lightbox-close {
-        top: 10px;
-        right: 10px;
-        width: 35px;
-        height: 35px;
-        font-size: 24px;
-      }
     }
   }
 }
