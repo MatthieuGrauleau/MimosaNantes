@@ -1,8 +1,8 @@
 .avis {
   padding: 60px 20px;
-  background-color: #9d4f16; // Changé de #EFEBE2 à #9d4f16
+  background-color: #9d4f16;
   font-family: 'Lustria', serif;
-  color: white; // Changé de #4d301a à white
+  color: white;
   
   .avis-header {
     text-align: center;
@@ -12,34 +12,68 @@
       font-size: 2.8em;
       margin-bottom: 15px;
       font-family: 'Tan Pearl', serif;
-      color: white; // Changé de #4d301a à white
+      color: white;
       
       .highlight-title {
-        color: #efcd8d; // Changé de #B0714B à #efcd8d
+        color: #efcd8d;
       }
     }
     
     .avis-subtitle {
       font-size: 1.2em;
-      color: #efcd8d; // Changé de #666 à #efcd8d
+      color: #efcd8d;
+    }
+  }
+  
+  .avis-carousel {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    
+    .carousel-btn {
+      background: rgba(239, 205, 141, 0.2);
+      border: 2px solid #efcd8d;
+      color: #efcd8d;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      
+      &:hover {
+        background: #efcd8d;
+        color: #9d4f16;
+      }
+      
+      &.carousel-btn-prev {
+        margin-right: 20px;
+      }
+      
+      &.carousel-btn-next {
+        margin-left: 20px;
+      }
     }
   }
   
   .avis-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
+    flex: 1;
+    transition: transform 0.3s ease;
   }
   
   .avis-card {
-    background-color: rgba(255, 255, 255, 0.1); // Changé de white à transparent
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     padding: 25px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2); // Ajouté une bordure légère
+    border: 1px solid rgba(255, 255, 255, 0.2);
     
     &:hover {
       transform: translateY(-5px);
@@ -65,25 +99,25 @@
         h3 {
           margin: 0 0 5px;
           font-size: 1.1em;
-          color: white; // Changé de #4d301a à white
+          color: white;
         }
         
         .avis-rating {
           margin-bottom: 5px;
           
           .star {
-            color: rgba(239, 205, 141, 0.3); // Changé de #ccc à une version transparente de #efcd8d
+            color: rgba(239, 205, 141, 0.3);
             font-size: 1.2em;
             
             &.filled {
-              color: #efcd8d; // Changé de #B0714B à #efcd8d
+              color: #efcd8d;
             }
           }
         }
         
         .avis-date {
           font-size: 0.9em;
-          color: #efcd8d; // Changé de #888 à #efcd8d
+          color: #efcd8d;
           margin: 0;
         }
       }
@@ -94,7 +128,32 @@
         margin: 0;
         font-size: 1em;
         line-height: 1.6;
-        color: white; // Changé de #555 à white
+        color: white;
+      }
+    }
+  }
+  
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0;
+    
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #efcd8d;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &.active {
+        background: #efcd8d;
+      }
+      
+      &:hover {
+        background: rgba(239, 205, 141, 0.5);
       }
     }
   }
@@ -106,30 +165,71 @@
     .avis-button {
       display: inline-block;
       padding: 12px 24px;
-      background-color: rgba(239, 205, 141, 0.2); // Changé de #B0714B à une version transparente de #efcd8d
-      color: #efcd8d; // Changé de white à #efcd8d
+      background-color: rgba(239, 205, 141, 0.2);
+      color: #efcd8d;
       text-decoration: none;
       border-radius: 50px;
       font-size: 1em;
       transition: background-color 0.3s ease;
-      border: 2px solid #efcd8d; // Ajouté une bordure
+      border: 2px solid #efcd8d;
       
       &:hover {
-        background-color: #efcd8d; // Changé de #9d4f16 à #efcd8d
-        color: #9d4f16; // Ajouté pour meilleur contraste au survol
+        background-color: #efcd8d;
+        color: #9d4f16;
+      }
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .avis-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .avis-carousel {
+      .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        
+        &.carousel-btn-prev {
+          margin-right: 15px;
+        }
+        
+        &.carousel-btn-next {
+          margin-left: 15px;
+        }
       }
     }
   }
   
   @media (max-width: 768px) {
     .avis-container {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
+    }
+    
+    .avis-carousel {
+      flex-direction: column;
+      
+      .carousel-btn {
+        display: none; // Masquer les boutons sur mobile
+      }
+    }
+    
+    .carousel-dots {
+      order: -1;
+      margin: 0 0 30px 0;
     }
   }
   
   @media (max-width: 480px) {
-    .avis-container {
-      grid-template-columns: 1fr;
+    padding: 40px 15px;
+    
+    .avis-header h1 {
+      font-size: 2.2em;
+    }
+    
+    .avis-card {
+      padding: 20px;
     }
   }
 }
