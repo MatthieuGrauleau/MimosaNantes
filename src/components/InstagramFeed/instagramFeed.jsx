@@ -4,42 +4,55 @@ import "./instagramFeed.scss";
 function InstagramFeed() {
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   
   // Nombre d'images à afficher par page dans le carrousel - maintenant dynamique
   const [imagesPerPage, setImagesPerPage] = useState(8);
   
-  // Ton access token Instagram
-  const accessToken = "IGAAQk9eLbw8xBZAE5jVm5CajBGeWRYWmt6V09XelJqVVNRMVQ2dkpfSV84NUpOUWNId3ZAyZAjhIU2MxRVhDWkVodjFBbGRMZAFl5Y0R6dnFhQ0tnRTlZAWmNaQVEwQkVuQjFGVTlZAczdweWdsejVzcU41M21VSHN6U3RBQnByMVNMcwZDZD";
+  // Token d'accès Instagram mis à jour
+  const accessToken = "IGAAQk9eLbw8xBZAFRlNXZAKc0phcFJTOTRVY1VwRXFDNkRCWW5oazZANV1BhNVg1ZAEp0VU9Lc0I5WjFtbXJEbVh0TUNTX3M2WHdmVG9JdWdIMWRqdzhzRzNsbVBvNFpjMzNpaUNWV1RqcVlVNHUzeUN2NENlTEhuUGFrZAXJOSHdpRQZDZD";
 
   // État pour la lightbox
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState(null);
+
+  // Fonction pour renouveler le token de longue durée
+  const refreshLongLivedToken = async (shortLivedToken) => {
+    try {
+      const response = await fetch(
+        `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${shortLivedToken}`
+      );
+      const data = await response.json();
+      
+      if (data.access_token) {
+        console.log("Token renouvelé avec succès");
+        return data.access_token;
+      }
+    } catch (error) {
+      console.error("Erreur lors du renouvellement du token:", error);
+    }
+    return null;
+  };
 
   useEffect(() => {
     // Ajuster les images par page en fonction de la taille de l'écran
     const handleResize = () => {
       const width = window.innerWidth;
       if (width <= 480) {
-        setImagesPerPage(2); // Moins d'images sur mobile
+        setImagesPerPage(2);
       } else if (width <= 768) {
-        setImagesPerPage(4); // 4 images sur tablettes
+        setImagesPerPage(4);
       } else {
-        setImagesPerPage(8); // 8 images par défaut sur desktop
+        setImagesPerPage(8);
       }
     };
 
-    // Appel initial
     handleResize();
-    
-    // Ajouter l'écouteur d'événement
     window.addEventListener('resize', handleResize);
-    
-    // Nettoyage
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Réinitialiser la page actuelle lorsque le nombre d'images par page change
   useEffect(() => {
     setCurrentPage(0);
   }, [imagesPerPage]);
@@ -47,30 +60,40 @@ function InstagramFeed() {
   useEffect(() => {
     async function fetchAllInstagramMedia() {
       setLoading(true);
+      setError(null);
+      
+      if (!accessToken || accessToken === "VOTRE_NOUVEAU_TOKEN_ICI") {
+        setError("Token d'accès Instagram manquant. Veuillez configurer votre token.");
+        setLoading(false);
+        return;
+      }
+
       let allMedia = [];
-      // Ajouter children,media_type pour récupérer les albums
-      // Conserver tous les champs originaux des medias pour le debugging
       let nextUrl = `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,children{media_url,thumbnail_url,media_type}&access_token=${accessToken}&limit=100`;
       
       try {
-        // Continuer à charger tant qu'il y a une page suivante
         while (nextUrl) {
           const response = await fetch(nextUrl);
           const data = await response.json();
           
           if (data.error) {
             console.error("Erreur API Instagram:", data.error);
+            
+            // Messages d'erreur spécifiques
+            if (data.error.code === 190) {
+              setError("Token d'accès expiré. Veuillez renouveler votre token Instagram.");
+            } else if (data.error.code === 100) {
+              setError("Token d'accès invalide. Veuillez vérifier votre configuration.");
+            } else {
+              setError(`Erreur Instagram: ${data.error.message}`);
+            }
             break;
           }
           
           if (data.data && data.data.length > 0) {
-            // Pour le debugging des médias reçus
-            console.log("Premier média reçu:", data.data[0]);
-            
             const formattedMedia = data.data
               .filter(item => item.media_type === "IMAGE" || item.media_type === "VIDEO" || item.media_type === "CAROUSEL_ALBUM")
               .map(item => {
-                // Pour les albums, on prend juste la première image pour simplicité
                 if (item.media_type === "CAROUSEL_ALBUM" && item.children && item.children.data && item.children.data.length > 0) {
                   const firstChild = item.children.data[0];
                   return {
@@ -82,21 +105,18 @@ function InstagramFeed() {
                     caption: item.caption || "",
                     permalink: item.permalink,
                     timestamp: item.timestamp,
-                    // Conserver tout l'objet original pour le debugging
                     originalData: item
                   };
                 }
                 
                 return {
                   id: item.id,
-                  // Utiliser thumbnail_url pour les vidéos si disponible, sinon media_url
                   imageUrl: (item.media_type === "VIDEO" && item.thumbnail_url) ? item.thumbnail_url : item.media_url,
                   videoUrl: item.media_type === "VIDEO" ? item.media_url : null,
                   mediaType: item.media_type,
                   caption: item.caption || "",
                   permalink: item.permalink,
                   timestamp: item.timestamp,
-                  // Conserver tout l'objet original pour le debugging
                   originalData: item
                 };
               });
@@ -104,11 +124,9 @@ function InstagramFeed() {
             allMedia = [...allMedia, ...formattedMedia];
           }
           
-          // Vérifier s'il y a une page suivante
           nextUrl = data.paging && data.paging.next ? data.paging.next : null;
         }
         
-        // Trier les médias par date (du plus récent au plus ancien)
         const sortedMedia = allMedia.sort((a, b) => {
           return new Date(b.timestamp) - new Date(a.timestamp);
         });
@@ -117,13 +135,14 @@ function InstagramFeed() {
         console.log(`Nombre total de médias chargés: ${sortedMedia.length}`);
       } catch (error) {
         console.error("Erreur lors du chargement des médias Instagram:", error);
+        setError("Erreur de connexion. Vérifiez votre connexion internet.");
       }
       
       setLoading(false);
     }
 
     fetchAllInstagramMedia();
-  }, []);
+  }, [accessToken]);
 
   // Calculer le nombre total de pages pour le carrousel
   const totalPages = Math.ceil(media.length / imagesPerPage);
@@ -134,17 +153,14 @@ function InstagramFeed() {
     return media.slice(startIndex, startIndex + imagesPerPage);
   };
   
-  // Naviguer vers la page précédente
   const goToPreviousPage = () => {
     setCurrentPage(prev => (prev === 0 ? totalPages - 1 : prev - 1));
   };
   
-  // Naviguer vers la page suivante
   const goToNextPage = () => {
     setCurrentPage(prev => (prev === totalPages - 1 ? 0 : prev + 1));
   };
 
-  // Fonction pour tronquer le texte à 50 caractères
   const truncateCaption = (caption, maxLength = 50) => {
     if (!caption) return "";
     if (caption.length <= maxLength) return caption;
@@ -160,6 +176,21 @@ function InstagramFeed() {
 
       {loading ? (
         <div className="loading">Chargement des photos...</div>
+      ) : error ? (
+        <div className="error-container">
+          <div className="error-message">
+            <h3>⚠️ Problème avec le feed Instagram</h3>
+            <p>{error}</p>
+            <div className="error-solutions">
+              <h4>Solutions :</h4>
+              <ul>
+                <li>Renouveler le token d'accès sur <a href="https://developers.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook Developers</a></li>
+                <li>Vérifier que l'app Instagram Basic Display est configurée</li>
+                <li>Vérifier la connexion internet</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       ) : (
         <>
           <div className="instagram-carousel-container">
@@ -231,7 +262,7 @@ function InstagramFeed() {
         </a>
       </div>
 
-      {/* Lightbox améliorée avec style Instagram */}
+      {/* Lightbox */}
       {lightboxOpen && selectedMedia && (
         <div className="lightbox" onClick={() => setLightboxOpen(false)}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
