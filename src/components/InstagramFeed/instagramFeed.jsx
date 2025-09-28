@@ -6,37 +6,15 @@ function InstagramFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-  
-  // Nombre d'images à afficher par page dans le carrousel - maintenant dynamique
   const [imagesPerPage, setImagesPerPage] = useState(8);
-  
-  // Token d'accès Instagram mis à jour
-  const accessToken = "IGAAQk9eLbw8xBZAFRlNXZAKc0phcFJTOTRVY1VwRXFDNkRCWW5oazZANV1BhNVg1ZAEp0VU9Lc0I5WjFtbXJEbVh0TUNTX3M2WHdmVG9JdWdIMWRqdzhzRzNsbVBvNFpjMzNpaUNWV1RqcVlVNHUzeUN2NENlTEhuUGFrZAXJOSHdpRQZDZD";
 
-  // État pour la lightbox
+  // TOKEN SÉCURISÉ via variable d'environnement
+  const accessToken = process.env.REACT_APP_INSTAGRAM_TOKEN;
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState(null);
 
-  // Fonction pour renouveler le token de longue durée
-  const refreshLongLivedToken = async (shortLivedToken) => {
-    try {
-      const response = await fetch(
-        `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${shortLivedToken}`
-      );
-      const data = await response.json();
-      
-      if (data.access_token) {
-        console.log("Token renouvelé avec succès");
-        return data.access_token;
-      }
-    } catch (error) {
-      console.error("Erreur lors du renouvellement du token:", error);
-    }
-    return null;
-  };
-
   useEffect(() => {
-    // Ajuster les images par page en fonction de la taille de l'écran
     const handleResize = () => {
       const width = window.innerWidth;
       if (width <= 480) {
@@ -62,8 +40,9 @@ function InstagramFeed() {
       setLoading(true);
       setError(null);
       
-      if (!accessToken || accessToken === "VOTRE_NOUVEAU_TOKEN_ICI") {
-        setError("Token d'accès Instagram manquant. Veuillez configurer votre token.");
+      // Vérifier que le token existe
+      if (!accessToken) {
+        setError("Configuration manquante. Token Instagram non défini dans les variables d'environnement.");
         setLoading(false);
         return;
       }
@@ -79,7 +58,6 @@ function InstagramFeed() {
           if (data.error) {
             console.error("Erreur API Instagram:", data.error);
             
-            // Messages d'erreur spécifiques
             if (data.error.code === 190) {
               setError("Token d'accès expiré. Veuillez renouveler votre token Instagram.");
             } else if (data.error.code === 100) {
@@ -104,8 +82,7 @@ function InstagramFeed() {
                     mediaType: firstChild.media_type,
                     caption: item.caption || "",
                     permalink: item.permalink,
-                    timestamp: item.timestamp,
-                    originalData: item
+                    timestamp: item.timestamp
                   };
                 }
                 
@@ -116,8 +93,7 @@ function InstagramFeed() {
                   mediaType: item.media_type,
                   caption: item.caption || "",
                   permalink: item.permalink,
-                  timestamp: item.timestamp,
-                  originalData: item
+                  timestamp: item.timestamp
                 };
               });
             
@@ -144,10 +120,8 @@ function InstagramFeed() {
     fetchAllInstagramMedia();
   }, [accessToken]);
 
-  // Calculer le nombre total de pages pour le carrousel
   const totalPages = Math.ceil(media.length / imagesPerPage);
   
-  // Obtenir les médias pour la page actuelle du carrousel
   const getCurrentPageMedia = () => {
     const startIndex = currentPage * imagesPerPage;
     return media.slice(startIndex, startIndex + imagesPerPage);
@@ -181,14 +155,6 @@ function InstagramFeed() {
           <div className="error-message">
             <h3>⚠️ Problème avec le feed Instagram</h3>
             <p>{error}</p>
-            <div className="error-solutions">
-              <h4>Solutions :</h4>
-              <ul>
-                <li>Renouveler le token d'accès sur <a href="https://developers.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook Developers</a></li>
-                <li>Vérifier que l'app Instagram Basic Display est configurée</li>
-                <li>Vérifier la connexion internet</li>
-              </ul>
-            </div>
           </div>
         </div>
       ) : (
@@ -262,7 +228,6 @@ function InstagramFeed() {
         </a>
       </div>
 
-      {/* Lightbox */}
       {lightboxOpen && selectedMedia && (
         <div className="lightbox" onClick={() => setLightboxOpen(false)}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
