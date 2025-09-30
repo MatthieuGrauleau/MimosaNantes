@@ -85,7 +85,7 @@ function Valeurs() {
           <div className="valeur-circle" aria-hidden="true">M</div>
           <h3 itemProp="name">Maison</h3>
           <p itemProp="description">
-            Tout est fait par nos petites mains. Chaque plat de brunch et chaque pâtisserie est préparé avec passion et soin par nos cuisiniers, avec des techniques artisanales.
+            Tout est fait par nos petites mains. Chaque plat de brunch et chaque pâtisserie sont préparés avec passion et soin par nos cuisiniers, avec des techniques artisanales.
           </p>
         </article>
       </div>
