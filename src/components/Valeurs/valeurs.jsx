@@ -15,57 +15,79 @@ function Valeurs() {
       setIsMobile(window.innerWidth <= 768);
     };
     
-    // Vérifier au chargement initial
     checkIsMobile();
-    
-    // Ajouter un écouteur d'événement pour les changements de taille
     window.addEventListener('resize', checkIsMobile);
     
-    // Nettoyer l'écouteur d'événement
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
   return (
-    <section className="valeurs" id="valeurs">
+    <section 
+      className="valeurs" 
+      id="valeurs"
+      aria-label="Les valeurs du restaurant Mimosa"
+    >
       <div 
         ref={headerRef}
         className={`valeurs-header ${isHeaderVisible ? 'animate-fadeInDown' : 'invisible'}`}
       >
-        <h1>Nos <span className="highlight-title">Valeurs</span></h1>
+        <h2>Nos <span className="highlight-title">Valeurs</span></h2>
+        <p className="valeurs-subtitle">
+          Ce qui fait la différence de notre restaurant brunch à Nantes
+        </p>
       </div>
       <div className="valeurs-container">
-        <div 
+        <article 
           ref={cardRef1}
           className={`valeur-card ${isCard1Visible ? 'animate-zoomIn' : 'invisible'} ${!isMobile ? 'delay-100' : ''}`}
+          itemScope 
+          itemType="https://schema.org/Thing"
         >
-          <div className="valeur-circle">F</div>
-          <h2>Fraîcheur</h2>
-          <p>On ne badine pas avec les ingrédients. On se fournit chez les voisins et on mise sur la fraîcheur. La carte change à chaque saison !</p>
-        </div>
-        <div 
+          <div className="valeur-circle" aria-hidden="true">F</div>
+          <h3 itemProp="name">Fraîcheur</h3>
+          <p itemProp="description">
+            On ne badine pas avec les ingrédients. On se fournit chez les producteurs locaux de Nantes et on mise sur la fraîcheur. La carte de notre restaurant change à chaque saison !
+          </p>
+        </article>
+        
+        <article 
           ref={cardRef2}
           className={`valeur-card ${isCard2Visible ? 'animate-zoomIn' : 'invisible'} ${!isMobile ? 'delay-200' : ''}`}
+          itemScope 
+          itemType="https://schema.org/Thing"
         >
-          <div className="valeur-circle">C</div>
-          <h2>Créativité</h2>
-          <p>On adore jouer avec les saveurs et les associations audacieuses et créer des plats uniques qui feront danser vos papilles !</p>
-        </div>
-        <div 
+          <div className="valeur-circle" aria-hidden="true">C</div>
+          <h3 itemProp="name">Créativité</h3>
+          <p itemProp="description">
+            On adore jouer avec les saveurs et les associations audacieuses dans nos brunchs. Nous créons des plats uniques qui feront danser vos papilles !
+          </p>
+        </article>
+        
+        <article 
           ref={cardRef3}
           className={`valeur-card ${isCard3Visible ? 'animate-zoomIn' : 'invisible'} ${!isMobile ? 'delay-300' : ''}`}
+          itemScope 
+          itemType="https://schema.org/Thing"
         >
-          <div className="valeur-circle">N</div>
-          <h2>Naturel</h2>
-          <p>On dit non aux aliments transformés et aux produits chimiques. La simplicité est au cœur de notre cuisine.</p>
-        </div>
-        <div 
+          <div className="valeur-circle" aria-hidden="true">N</div>
+          <h3 itemProp="name">Naturel</h3>
+          <p itemProp="description">
+            On dit non aux aliments transformés et aux produits chimiques dans notre restaurant brunch. La simplicité et le naturel sont au cœur de notre cuisine.
+          </p>
+        </article>
+        
+        <article 
           ref={cardRef4}
           className={`valeur-card ${isCard4Visible ? 'animate-zoomIn' : 'invisible'} ${!isMobile ? 'delay-400' : ''}`}
+          itemScope 
+          itemType="https://schema.org/Thing"
         >
-          <div className="valeur-circle">M</div>
-          <h2>Maison</h2>
-          <p>Tout est fait par nos petites mains. Chaque plat est préparé avec passion et soin par nos cuisiniers passionnés, avec des techniques artisanales.</p>
-        </div>
+          <div className="valeur-circle" aria-hidden="true">M</div>
+          <h3 itemProp="name">Maison</h3>
+          <p itemProp="description">
+            Tout est fait par nos petites mains. Chaque plat de brunch et chaque pâtisserie est préparé avec passion et soin par nos cuisiniers, avec des techniques artisanales.
+          </p>
+        </article>
       </div>
     </section>
   );

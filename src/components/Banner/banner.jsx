@@ -6,12 +6,10 @@ function Banner() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Ajouter un petit délai pour que l'animation soit visible
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 300);
 
-    // Ajout d'un écouteur d'événement pour s'assurer que l'image est chargée
     const img = new Image();
     img.src = logo;
     img.onload = () => setIsLoaded(true);
@@ -20,20 +18,29 @@ function Banner() {
   }, []);
 
   return (
-    <section className='banner'>
+    <section className='banner' aria-label="Bannière principale Mimosa Nantes">
       <div className="overlay">
         <img 
           src={logo} 
-          alt="Logo Mimosa" 
+          alt="Logo Mimosa - Restaurant Brunch Nantes Bouffay" 
           className={`logo ${isLoaded ? 'animate-zoomIn' : 'invisible'}`}
+          width="600"
+          height="400"
         />
+        
+        {/* Titre caché pour le SEO mais présent dans le DOM */}
+        <h1 className="sr-only">
+          Mimosa - Restaurant Brunch à Nantes | Café et Pâtisserie Maison
+        </h1>
+        
         <div className="button-container">
           <a 
             href={menupdf} 
             className={`button ${isLoaded ? 'animate-fadeInUp delay-300' : 'invisible'}`} 
             target="_blank" 
             rel="noopener noreferrer"
-            aria-label="Voir notre carte"
+            aria-label="Consulter notre carte de brunch et pâtisseries"
+            title="Voir la carte Mimosa - Brunch Nantes"
           >
             Notre carte
           </a>
@@ -42,7 +49,8 @@ function Banner() {
             className={`button commander ${isLoaded ? 'animate-fadeInUp delay-400' : 'invisible'}`} 
             target="_blank" 
             rel="noopener noreferrer"
-            aria-label="Commander en ligne"
+            aria-label="Commander en ligne votre brunch Mimosa"
+            title="Commander un brunch à Nantes - Mimosa"
           >
             Commander
           </a>

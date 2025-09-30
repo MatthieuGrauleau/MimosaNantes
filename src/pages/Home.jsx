@@ -1,3 +1,4 @@
+import SEOHead from "../components/SEO/SEOHead";
 import About from "../components/About/about";
 import Banner from "../components/Banner/banner";
 import Header from "../components/Header/header";
@@ -11,6 +12,7 @@ import Footer from "../components/Footer/footer";
 function Home(){
     return(
         <>
+        <SEOHead />
         <Header/>
         <Banner/>
         <Info/>

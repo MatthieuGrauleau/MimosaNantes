@@ -1,5 +1,5 @@
 @import './variables.scss';
-@import './animations.scss';  // Importer le fichier d'animations
+@import './animations.scss';
 @import '../components/Banner/banner.scss';
 @import'../components/Header/header.scss';
 @import'../components/Info/info.scss';
@@ -34,4 +34,86 @@ html {
 // Classe pour masquer les éléments avant l'animation
 .invisible {
   opacity: 0;
+}
+
+// ===== UTILITAIRES SEO =====
+
+// Classe pour les éléments cachés visuellement mais accessibles aux lecteurs d'écran et robots
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Optimisation du composant Info
+.info {
+  .phone-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.4em;
+    transition: color 0.3s ease;
+    display: inline-block;
+    
+    &:hover {
+      color: #efcd8d;
+      text-decoration: underline;
+    }
+  }
+  
+  address {
+    font-style: normal;
+    
+    strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1.1em;
+    }
+    
+    .metro-info {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      font-size: 0.9em;
+    }
+  }
+  
+  .service-info {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 5px 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-style: italic;
+  }
+}
+
+// Optimisation du Footer pour les liens
+.footer {
+  a[href^="tel:"] {
+    color: #efcd8d;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: white;
+      text-decoration: underline;
+    }
+  }
+  
+  nav {
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  }
 }
