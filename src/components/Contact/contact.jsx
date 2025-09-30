@@ -70,7 +70,7 @@ function Contact() {
               <h3>
                 <FontAwesomeIcon icon={faPhoneVolume} /> Téléphone
               </h3>
-              <p><a href="tel:0622323872">06 22 32 38 72</a></p>
+              <p><a href="tel:0749986884">07 49 98 68 84</a></p>
             </div>
           </div>
           

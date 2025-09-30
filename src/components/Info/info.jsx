@@ -12,7 +12,7 @@ function Info() {
           ref={info1Ref}
           className={isInfo1Visible ? 'animate-fadeInUp' : 'invisible'}
         >
-            <h2>06 80 33 11 61</h2>
+            <h2>07 49 98 68 84</h2>
             <p>N'hésitez pas à me contacter pour plus d'informations</p>
         </div>
         <div 
