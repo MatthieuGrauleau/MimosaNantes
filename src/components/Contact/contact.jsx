@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useIntersectionObserver } from "../../utils/animationUtils";
 import "./contact.scss";
 
@@ -11,7 +11,8 @@ import {
   faLocationDot, 
   faPhoneVolume, 
   faCalendarAlt, 
-  faHashtag
+  faHashtag,
+  faCalendarCheck
 } from '@fortawesome/free-solid-svg-icons';
 // Pour Instagram et Facebook qui sont des marques
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
@@ -21,6 +22,38 @@ function Contact() {
   const [mapRef, isMapVisible] = useIntersectionObserver();
   const [infoRef, isInfoVisible] = useIntersectionObserver();
   const [socialRef, isSocialVisible] = useIntersectionObserver();
+  const [zenchefRef, isZenchefVisible] = useIntersectionObserver();
+
+  // Charger le script Zenchef
+  useEffect(() => {
+    const script = document.getElementById('zenchef-sdk');
+    
+    if (!script) {
+      const newScript = document.createElement('script');
+      newScript.id = 'zenchef-sdk';
+      newScript.src = 'https://sdk.zenchef.com/v1/sdk.min.js';
+      newScript.async = true;
+      newScript.onload = () => {
+        if (window.ZenchefWidget) {
+          window.ZenchefWidget.init();
+        }
+      };
+      document.body.appendChild(newScript);
+    } else {
+      if (window.ZenchefWidget) {
+        window.ZenchefWidget.init();
+      }
+    }
+  }, []);
+
+  // Fonction pour ouvrir la page de réservation Zenchef
+  const handleZenchefClick = () => {
+    window.open(
+      'https://bookings.zenchef.com/results?rid=379069&pid=1001',
+      '_blank',
+      'noopener,noreferrer'
+    );
+  };
 
   return (
     <section className="contact" id="contact">
@@ -29,7 +62,7 @@ function Contact() {
         className={`contact-header ${isTitleVisible ? 'animate-fadeInDown' : 'invisible'}`}
       >
         <h1>Nous <span className="highlight-title">Contacter</span></h1>
-        <p className="contact-subtitle">Venez nous découvrir ou contactez-nous</p>
+        <p className="contact-subtitle">Venez nous découvrir ou réservez votre table</p>
       </div>
 
       <div className="contact-container">
@@ -42,7 +75,7 @@ function Contact() {
             allowFullScreen="" 
             loading="lazy" 
             referrerPolicy="no-referrer-when-downgrade"
-            title="Carte de localisation Mimosa"
+            title="Carte de localisation Mimosa restaurant brunch à Nantes Bouffay"
           ></iframe>
         </div>
         
@@ -70,7 +103,7 @@ function Contact() {
               <h3>
                 <FontAwesomeIcon icon={faPhoneVolume} /> Téléphone
               </h3>
-              <p><a href="tel:0749986884">07 49 98 68 84</a></p>
+              <p><a href="tel:+33749986884" title="Appeler Mimosa pour réserver">07 49 98 68 84</a></p>
             </div>
           </div>
           
@@ -94,15 +127,60 @@ function Contact() {
               <FontAwesomeIcon icon={faHashtag} /> Suivez-nous
             </h3>
             <div className="social-icons">
-              <a href="https://www.instagram.com/mimosanantes" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a 
+                href="https://www.instagram.com/mimosanantes" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="social-icon"
+                title="Suivre Mimosa sur Instagram"
+                aria-label="Instagram Mimosa"
+              >
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
-              <a href="https://www.facebook.com/people/Mimosa-Brunch-P%C3%A2tisseries/61574192960387/" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a 
+                href="https://www.facebook.com/people/Mimosa-Brunch-P%C3%A2tisseries/61574192960387/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="social-icon"
+                title="Suivre Mimosa sur Facebook"
+                aria-label="Facebook Mimosa"
+              >
                 <FontAwesomeIcon icon={faFacebookF} />
               </a>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Section Zenchef - Réservation */}
+      <div 
+        ref={zenchefRef}
+        className={`zenchef-container ${isZenchefVisible ? 'animate-fadeInUp' : 'invisible'}`}
+      >
+        <div className="zenchef-header">
+          <FontAwesomeIcon icon={faCalendarCheck} className="zenchef-icon" />
+          <h2>Réservez votre table en ligne</h2>
+          <p>Réservation directe chez Mimosa - Restaurant brunch à Nantes</p>
+          <button 
+            className="zenchef-button"
+            onClick={handleZenchefClick}
+            title="Ouvrir le formulaire de réservation Zenchef"
+            aria-label="Ouvrir la réservation en ligne"
+            type="button"
+          >
+            <FontAwesomeIcon icon={faCalendarCheck} /> Réserver maintenant
+          </button>
+        </div>
+        
+        <div 
+          className="zc-widget-config"
+          data-restaurant="379069"
+          data-open="2000"
+          id="zenchef-widget"
+          role="region"
+          aria-label="Widget de réservation Zenchef pour Mimosa restaurant"
+          title="Réservez votre table chez Mimosa"
+        />
       </div>
     </section>
   );

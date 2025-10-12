@@ -7,7 +7,7 @@ function Info() {
   const [info3Ref, isInfo3Visible] = useIntersectionObserver();
 
   return (
-    <section className='info' id="contact" aria-label="Coordonnées et horaires">
+    <section className='info' id="info" aria-label="Coordonnées et horaires">
         <div 
           ref={info1Ref}
           className={isInfo1Visible ? 'animate-fadeInUp' : 'invisible'}

@@ -29,7 +29,7 @@
       display: flex;
       flex-wrap: wrap;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 0 auto 50px;
       gap: 30px;
       
       .contact-map {
@@ -170,7 +170,142 @@
         }
       }
     }
-    
+
+    // ===== SECTION ZENCHEF =====
+    .zenchef-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(176, 113, 75, 0.08) 0%, rgba(157, 79, 22, 0.05) 100%);
+      border-radius: 15px;
+      padding: 40px 30px;
+      border: 2px solid rgba(176, 113, 75, 0.15);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      
+      @media (max-width: 768px) {
+        padding: 30px 20px;
+        border-radius: 12px;
+      }
+
+      @media (max-width: 576px) {
+        padding: 25px 15px;
+        margin: 30px auto 0;
+      }
+
+      .zenchef-header {
+        text-align: center;
+        margin-bottom: 30px;
+
+        .zenchef-icon {
+          color: #B0714B;
+          font-size: 2em;
+          margin-bottom: 15px;
+          display: block;
+          animation: pulse 2s ease-in-out infinite;
+
+          @keyframes pulse {
+            0%, 100% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.7;
+            }
+          }
+        }
+
+        h2 {
+          font-size: 2em;
+          font-family: 'Tan Pearl', serif;
+          color: #4d301a;
+          margin-bottom: 10px;
+
+          @media (max-width: 768px) {
+            font-size: 1.6em;
+          }
+
+          @media (max-width: 576px) {
+            font-size: 1.4em;
+          }
+        }
+
+        p {
+          font-size: 1.1em;
+          color: #666;
+          margin: 0 0 20px 0;
+          line-height: 1.5;
+
+          @media (max-width: 576px) {
+            font-size: 1em;
+            margin-bottom: 15px;
+          }
+        }
+
+        .zenchef-button {
+          background-color: #B0714B;
+          color: white;
+          border: none;
+          padding: 14px 30px;
+          font-size: 1.1em;
+          font-family: 'Tan Pearl', serif;
+          border-radius: 50px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(176, 113, 75, 0.3);
+          font-weight: bold;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+
+          &:hover {
+            background-color: #9d4f16;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(176, 113, 75, 0.4);
+          }
+
+          &:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(176, 113, 75, 0.3);
+          }
+
+          svg {
+            font-size: 1.2em;
+          }
+
+          @media (max-width: 768px) {
+            padding: 12px 25px;
+            font-size: 1em;
+          }
+
+          @media (max-width: 576px) {
+            width: 100%;
+            justify-content: center;
+            padding: 12px 20px;
+            font-size: 0.95em;
+          }
+        }
+      }
+
+      // Widget Zenchef
+      .zc-widget-config {
+        border-radius: 10px;
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+        iframe {
+          border: none;
+          border-radius: 10px;
+          display: block;
+        }
+
+        // Personnalisation possible du widget
+        &:focus-within {
+          box-shadow: 0 6px 16px rgba(176, 113, 75, 0.15);
+        }
+      }
+    }
+
     @media (max-width: 768px) {
       .contact-container {
         flex-direction: column;
@@ -184,4 +319,41 @@
         }
       }
     }
-  }
+
+    @media (max-width: 576px) {
+      padding: 40px 15px;
+
+      .contact-header {
+        margin-bottom: 30px;
+
+        h1 {
+          font-size: 2em;
+          margin-bottom: 10px;
+        }
+
+        .contact-subtitle {
+          font-size: 1em;
+        }
+      }
+
+      .contact-container {
+        margin: 0 auto 30px;
+        gap: 15px;
+
+        .contact-map {
+          flex: 1 1 100%;
+          min-height: 300px;
+
+          iframe {
+            min-height: 300px;
+          }
+        }
+
+        .contact-info {
+          flex: 1 1 100%;
+          padding: 0;
+          gap: 15px;
+        }
+      }
+    }
+}
