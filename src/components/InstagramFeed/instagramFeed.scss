@@ -273,6 +273,42 @@
     color: #666;
   }
   
+  // Ajoute ça dans ton instagramFeed.scss existant, juste après .loading
+
+.instagram-placeholder {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, rgba(176, 113, 75, 0.05) 0%, rgba(239, 235, 226, 0.05) 100%);
+  border-radius: 15px;
+  margin: 0 auto;
+  max-width: 800px;
+  
+  p {
+    font-size: 1.3em;
+    color: #B0714B;
+    margin: 0;
+    font-family: 'Tan Pearl', serif;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 40px 15px;
+    
+    p {
+      font-size: 1.1em;
+    }
+  }
+}
+
   .instagram-carousel-container {
     position: relative;
     max-width: 1200px;

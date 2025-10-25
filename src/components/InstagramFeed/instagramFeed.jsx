@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { useIntersectionObserver } from "../../utils/animationUtils";
 import "./instagramFeed.scss";
+
+// 🚀 OPTIMISATION BONUS : Image placeholder en base64 (très léger)
+const PLACEHOLDER_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%23EFEBE2' width='400' height='400'/%3E%3Ctext fill='%23B0714B' font-family='Arial' font-size='20' x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle'%3EChargement...%3C/text%3E%3C/svg%3E";
 
 function InstagramFeed() {
   const [media, setMedia] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [imagesPerPage, setImagesPerPage] = useState(8);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  // Intersection Observer pour charger uniquement quand visible
+  const [feedRef, isFeedVisible] = useIntersectionObserver({ threshold: 0.1 });
 
   // TOKEN SÉCURISÉ via variable d'environnement
   const accessToken = process.env.REACT_APP_INSTAGRAM_TOKEN;
@@ -35,80 +43,86 @@ function InstagramFeed() {
     setCurrentPage(0);
   }, [imagesPerPage]);
 
+  // 🚀 OPTIMISATION 1 : Charger seulement quand la section est visible
   useEffect(() => {
-    async function fetchAllInstagramMedia() {
+    if (isFeedVisible && !shouldLoad) {
+      setShouldLoad(true);
+    }
+  }, [isFeedVisible, shouldLoad]);
+
+  useEffect(() => {
+    // Ne charge pas si pas encore visible
+    if (!shouldLoad) return;
+
+    async function fetchInstagramMedia() {
       setLoading(true);
       setError(null);
       
-      // Vérifier que le token existe
       if (!accessToken) {
         setError("Configuration manquante. Token Instagram non défini dans les variables d'environnement.");
         setLoading(false);
         return;
       }
 
-      let allMedia = [];
-      let nextUrl = `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,children{media_url,thumbnail_url,media_type}&access_token=${accessToken}&limit=100`;
-      
       try {
-        while (nextUrl) {
-          const response = await fetch(nextUrl);
-          const data = await response.json();
+        // 🚀 OPTIMISATION 2 : Limiter à 24 posts au lieu de tout charger
+        const response = await fetch(
+          `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,children{media_url,thumbnail_url,media_type}&access_token=${accessToken}&limit=24`
+        );
+        
+        const data = await response.json();
+        
+        if (data.error) {
+          console.error("Erreur API Instagram:", data.error);
           
-          if (data.error) {
-            console.error("Erreur API Instagram:", data.error);
-            
-            if (data.error.code === 190) {
-              setError("Token d'accès expiré. Veuillez renouveler votre token Instagram.");
-            } else if (data.error.code === 100) {
-              setError("Token d'accès invalide. Veuillez vérifier votre configuration.");
-            } else {
-              setError(`Erreur Instagram: ${data.error.message}`);
-            }
-            break;
+          if (data.error.code === 190) {
+            setError("Token d'accès expiré. Veuillez renouveler votre token Instagram.");
+          } else if (data.error.code === 100) {
+            setError("Token d'accès invalide. Veuillez vérifier votre configuration.");
+          } else {
+            setError(`Erreur Instagram: ${data.error.message}`);
           }
-          
-          if (data.data && data.data.length > 0) {
-            const formattedMedia = data.data
-              .filter(item => item.media_type === "IMAGE" || item.media_type === "VIDEO" || item.media_type === "CAROUSEL_ALBUM")
-              .map(item => {
-                if (item.media_type === "CAROUSEL_ALBUM" && item.children && item.children.data && item.children.data.length > 0) {
-                  const firstChild = item.children.data[0];
-                  return {
-                    id: item.id,
-                    imageUrl: (firstChild.media_type === "VIDEO" && firstChild.thumbnail_url) ? 
-                              firstChild.thumbnail_url : firstChild.media_url,
-                    videoUrl: firstChild.media_type === "VIDEO" ? firstChild.media_url : null,
-                    mediaType: firstChild.media_type,
-                    caption: item.caption || "",
-                    permalink: item.permalink,
-                    timestamp: item.timestamp
-                  };
-                }
-                
+          setLoading(false);
+          return;
+        }
+        
+        if (data.data && data.data.length > 0) {
+          const formattedMedia = data.data
+            .filter(item => item.media_type === "IMAGE" || item.media_type === "VIDEO" || item.media_type === "CAROUSEL_ALBUM")
+            .map(item => {
+              if (item.media_type === "CAROUSEL_ALBUM" && item.children && item.children.data && item.children.data.length > 0) {
+                const firstChild = item.children.data[0];
                 return {
                   id: item.id,
-                  imageUrl: (item.media_type === "VIDEO" && item.thumbnail_url) ? item.thumbnail_url : item.media_url,
-                  videoUrl: item.media_type === "VIDEO" ? item.media_url : null,
-                  mediaType: item.media_type,
+                  imageUrl: (firstChild.media_type === "VIDEO" && firstChild.thumbnail_url) ? 
+                            firstChild.thumbnail_url : firstChild.media_url,
+                  videoUrl: firstChild.media_type === "VIDEO" ? firstChild.media_url : null,
+                  mediaType: firstChild.media_type,
                   caption: item.caption || "",
                   permalink: item.permalink,
                   timestamp: item.timestamp
                 };
-              });
-            
-            allMedia = [...allMedia, ...formattedMedia];
-          }
+              }
+              
+              return {
+                id: item.id,
+                imageUrl: (item.media_type === "VIDEO" && item.thumbnail_url) ? item.thumbnail_url : item.media_url,
+                videoUrl: item.media_type === "VIDEO" ? item.media_url : null,
+                mediaType: item.media_type,
+                caption: item.caption || "",
+                permalink: item.permalink,
+                timestamp: item.timestamp
+              };
+            });
           
-          nextUrl = data.paging && data.paging.next ? data.paging.next : null;
+          const sortedMedia = formattedMedia.sort((a, b) => {
+            return new Date(b.timestamp) - new Date(a.timestamp);
+          });
+          
+          setMedia(sortedMedia);
+          console.log(`✅ Médias Instagram chargés: ${sortedMedia.length}`);
         }
         
-        const sortedMedia = allMedia.sort((a, b) => {
-          return new Date(b.timestamp) - new Date(a.timestamp);
-        });
-        
-        setMedia(sortedMedia);
-        console.log(`Nombre total de médias chargés: ${sortedMedia.length}`);
       } catch (error) {
         console.error("Erreur lors du chargement des médias Instagram:", error);
         setError("Erreur de connexion. Vérifiez votre connexion internet.");
@@ -117,8 +131,8 @@ function InstagramFeed() {
       setLoading(false);
     }
 
-    fetchAllInstagramMedia();
-  }, [accessToken]);
+    fetchInstagramMedia();
+  }, [shouldLoad, accessToken]);
 
   const totalPages = Math.ceil(media.length / imagesPerPage);
   
@@ -142,13 +156,18 @@ function InstagramFeed() {
   };
 
   return (
-    <section className="instagram-feed" id="galerie">
+    <section ref={feedRef} className="instagram-feed" id="galerie">
       <div className="instagram-header">
-        <h1><span className="instagram-icon">#</span> Suivez nos créations <span className="highlight-title">@MimosaNantes</span></h1>
+        <h2><span className="instagram-icon">#</span> Suivez nos créations <span className="highlight-title">@MimosaNantes</span></h2>
         <p className="instagram-subtitle">Partagez vos moments chez nous avec #MimosaNantes</p>
       </div>
 
-      {loading ? (
+      {/* 🚀 OPTIMISATION 3 : Placeholder avant chargement */}
+      {!shouldLoad ? (
+        <div className="instagram-placeholder">
+          <p>📸 Nos dernières créations Instagram</p>
+        </div>
+      ) : loading ? (
         <div className="loading">Chargement des photos...</div>
       ) : error ? (
         <div className="error-container">
@@ -181,7 +200,14 @@ function InstagramFeed() {
                   }}
                 >
                   <div className="instagram-image-container">
-                    <img src={item.imageUrl} alt={item.caption} className="instagram-image" />
+                    {/* 🚀 OPTIMISATION 4 : Lazy loading des images */}
+                    <img 
+                      src={item.imageUrl} 
+                      alt={truncateCaption(item.caption, 100) || "Photo Instagram Mimosa Nantes"} 
+                      className="instagram-image"
+                      loading="lazy"
+                      decoding="async"
+                    />
                     {item.mediaType === "VIDEO" && (
                       <div className="video-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none">
@@ -215,6 +241,8 @@ function InstagramFeed() {
                   key={index} 
                   className={`carousel-dot ${index === currentPage ? "active" : ""}`}
                   onClick={() => setCurrentPage(index)}
+                  role="button"
+                  aria-label={`Page ${index + 1}`}
                 />
               ))}
             </div>
@@ -223,7 +251,13 @@ function InstagramFeed() {
       )}
       
       <div className="instagram-cta">
-        <a href="https://www.instagram.com/mimosanantes" target="_blank" rel="noopener noreferrer" className="instagram-button">
+        <a 
+          href="https://www.instagram.com/mimosanantes" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="instagram-button"
+          title="Voir plus sur Instagram - Mimosa Nantes"
+        >
           Voir plus sur Instagram
         </a>
       </div>
@@ -246,18 +280,18 @@ function InstagramFeed() {
                   src={selectedMedia.videoUrl} 
                   poster={selectedMedia.imageUrl}
                   controls 
-                  autoPlay 
                   className="lightbox-media"
                   playsInline
-                  preload="auto"
+                  preload="metadata"
                 >
                   Votre navigateur ne prend pas en charge la lecture de vidéos.
                 </video>
               ) : (
                 <img 
                   src={selectedMedia.imageUrl} 
-                  alt={selectedMedia.caption} 
-                  className="lightbox-media" 
+                  alt={selectedMedia.caption || "Photo Instagram"} 
+                  className="lightbox-media"
+                  loading="lazy"
                 />
               )}
             </div>
@@ -288,6 +322,7 @@ function InstagramFeed() {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="lightbox-instagram-link"
+                title="Voir cette publication sur Instagram"
               >
                 Voir sur Instagram
               </a>
