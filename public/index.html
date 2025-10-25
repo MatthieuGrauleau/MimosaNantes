@@ -1,5 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+	<style>
+  /* Critical CSS - Styles critiques pour le chargement initial */
+  
+  /* Reset et base */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #EFEBE2;
+    color: #efcd8d;
+  }
+  
+  /* Banner - Above the fold (critique) */
+  .banner {
+    position: relative;
+    background: #4d301a;
+    height: 100vh;
+    min-height: 450px;
+    max-height: 800px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .banner .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .banner img {
+    max-width: 70%;
+    margin-bottom: 30px;
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #B0714B;
+    color: #efcd8d;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 50px;
+    border: 2px solid #efcd8d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 10px;
+  }
+  
+  /* Header navigation */
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(77, 48, 26, 0.95);
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Animations critiques */
+  .invisible {
+    opacity: 0;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .animate-zoomIn {
+    animation: zoomIn 0.5s cubic-bezier(0, 0, 0.2, 1) forwards;
+  }
+  
+  .animate-fadeInUp {
+    animation: fadeInUp 0.5s cubic-bezier(0, 0, 0.2, 1) forwards;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Delay classes */
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-400 { animation-delay: 0.4s; }
+</style>
+
+<script>
+  // Preload de l'image de fond critique
+  (function() {
+    var link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = '/static/media/slidertest.jpg';
+    link.fetchpriority = 'high';
+    document.head.appendChild(link);
+  })();
+</script>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="./logo.png" />
