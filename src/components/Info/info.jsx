@@ -29,9 +29,9 @@ function Info() {
             <address>
               <p>
                 <strong>Mimosa Restaurant Brunch</strong><br />
-                7 rue Bon Secours<br />
+                2 bis Rue Fénelon<br />
                 44000 Nantes<br />
-                <span className="metro-info">🚊 Arrêt de tram: Bouffay (ligne 1)</span>
+                <span className="metro-info">🚊 Arrêt de tram: Commerce (lignes 2 et 3)</span>
               </p>
             </address>
         </div>
