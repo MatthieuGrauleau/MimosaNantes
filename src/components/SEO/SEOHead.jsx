@@ -104,12 +104,33 @@ function SEOHead() {
       {/* Favicon */}
       <link rel="icon" href={logo} />
       
-      {/* Fonts préchargées */}
+      {/* 🚀 OPTIMISATION : Preload des ressources critiques */}
+      <link 
+        rel="preload" 
+        as="image" 
+        href="/static/media/slidertest.jpg"
+        fetchpriority="high"
+      />
+      <link 
+        rel="preload" 
+        as="image" 
+        href={logo}
+        fetchpriority="high"
+      />
+      
+      {/* Fonts préchargées avec preload pour éviter le blocage */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
+        rel="preload"
+        as="style"
+        href="https://fonts.googleapis.com/css2?family=Lustria&family=Montserrat:wght@100;300;400&display=swap"
+      />
+      <link
         href="https://fonts.googleapis.com/css2?family=Lustria&family=Montserrat:wght@100;300;400&display=swap"
         rel="stylesheet"
+        media="print"
+        onLoad="this.media='all'"
       />
       
       {/* Canonical URL */}
