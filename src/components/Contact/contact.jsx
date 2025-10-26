@@ -71,11 +71,11 @@ function Contact() {
           className={`contact-map ${isMapVisible ? 'animate-fadeInLeft' : 'invisible'}`}
         >
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2707.1105766902054!2d-1.5563!3d47.2135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805eea48c149fbd%3A0x8f4e4b1919620a61!2s7%20Rue%20Bon%20Secours%2C%2044000%20Nantes!5e0!3m2!1sfr!2sfr!4v1709292033098!5m2!1sfr!2sfr" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2707.5!2d-1.5547!3d47.2180!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805eea48c149fbd%3A0x8f4e4b1919620a61!2s2%20bis%20Rue%20F%C3%A9nelon%2C%2044000%20Nantes!5e0!3m2!1sfr!2sfr!4v1709292033098!5m2!1sfr!2sfr" 
             allowFullScreen="" 
             loading="lazy" 
             referrerPolicy="no-referrer-when-downgrade"
-            title="Carte de localisation Mimosa restaurant brunch à Nantes Bouffay"
+            title="Carte de localisation Mimosa restaurant brunch à Nantes Fénelon"
           ></iframe>
         </div>
         
@@ -91,7 +91,7 @@ function Contact() {
               <h3>
                 <FontAwesomeIcon icon={faLocationDot} /> Adresse
               </h3>
-              <p>7 rue Bon Secours<br/>44000 Nantes<br/>Arrêt de tram: Bouffay</p>
+              <p>2 bis Rue Fénelon<br/>44000 Nantes<br/>Arrêt de tram: Commerce</p>
             </div>
           </div>
           
