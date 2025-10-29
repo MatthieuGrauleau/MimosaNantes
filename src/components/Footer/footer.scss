@@ -163,4 +163,19 @@
         transform: scale(1);
       }
     }
+	.footer-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); // Ajusté pour 4 colonnes
+  gap: 40px;
+  margin-bottom: 40px;
+  
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
   }

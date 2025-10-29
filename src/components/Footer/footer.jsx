@@ -28,7 +28,7 @@ function Footer() {
             <h3 itemProp="name">Mimosa Nantes</h3>
             <p itemProp="servesCuisine">Restaurant • Brunch • Café • Pâtisserie</p>
             <address itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-              <span itemProp="streetAddress">7 rue Bon Secours</span>, 
+              <span itemProp="streetAddress">2 bis Rue Fénelon</span>, 
               <span itemProp="postalCode">44000</span> 
               <span itemProp="addressLocality">Nantes</span>
             </address>
@@ -51,6 +51,16 @@ function Footer() {
                 <li><a href="#galerie" title="Photos du restaurant et des plats">Galerie photos</a></li>
                 <li><a href="#avis" title="Avis clients sur Mimosa Nantes">Avis clients</a></li>
                 <li><a href="#contact" title="Contactez le restaurant Mimosa">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+          
+          <div className="footer-section">
+            <h3>Informations légales</h3>
+            <nav aria-label="Liens légaux">
+              <ul>
+                <li><a href="/mentions-legales" title="Mentions légales de Mimosa">Mentions légales</a></li>
+                <li><a href="/politique-confidentialite" title="Politique de confidentialité et RGPD">Politique de confidentialité</a></li>
               </ul>
             </nav>
           </div>
